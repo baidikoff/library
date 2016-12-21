@@ -13,7 +13,6 @@
 		A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890B1E09DC4700327CD6 /* Main.storyboard */; };
 		A8B8890F1E09DC4700327CD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890E1E09DC4700327CD6 /* Assets.xcassets */; };
 		A8B889121E09DC4700327CD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */; };
-		A8B8891A1E09DD5B00327CD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = A8B889191E09DD5B00327CD6 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +23,6 @@
 		A8B8890E1E09DC4700327CD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8B889111E09DC4700327CD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8B889131E09DC4700327CD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8B889191E09DD5B00327CD6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Library.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Library/Pods-Library.debug.xcconfig"; sourceTree = "<group>"; };
 		B04764B3732F807C2DFDBF67 /* Pods_Library.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Library.release.xcconfig"; path = "Pods/Target Support Files/Pods-Library/Pods-Library.release.xcconfig"; sourceTree = "<group>"; };
@@ -59,13 +57,44 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A85E0E4E1E0A5FAF00954BA1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A8B889071E09DC4700327CD6 /* AppDelegate.swift */,
+				A8B889091E09DC4700327CD6 /* ViewController.swift */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A85E0E4F1E0A5FBA00954BA1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A85E0E501E0A5FDA00954BA1 /* UI */,
+				A8B889131E09DC4700327CD6 /* Info.plist */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A85E0E501E0A5FDA00954BA1 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A8B8890E1E09DC4700327CD6 /* Assets.xcassets */,
+				A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */,
+				A8B8890B1E09DC4700327CD6 /* Main.storyboard */,
+			);
+			name = UI;
+			path = UI;
+			sourceTree = "<group>";
+		};
 		A8B888FB1E09DC4700327CD6 = {
 			isa = PBXGroup;
 			children = (
-				A8B889061E09DC4700327CD6 /* Library */,
-				A8B889051E09DC4700327CD6 /* Products */,
-				5B5127F76B7B916965FEE6C6 /* Pods */,
 				5423722DE13811D194925E7D /* Frameworks */,
+				A8B889061E09DC4700327CD6 /* Library */,
+				5B5127F76B7B916965FEE6C6 /* Pods */,
+				A8B889051E09DC4700327CD6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,13 +109,8 @@
 		A8B889061E09DC4700327CD6 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				A8B889191E09DD5B00327CD6 /* Podfile */,
-				A8B889071E09DC4700327CD6 /* AppDelegate.swift */,
-				A8B889091E09DC4700327CD6 /* ViewController.swift */,
-				A8B8890B1E09DC4700327CD6 /* Main.storyboard */,
-				A8B8890E1E09DC4700327CD6 /* Assets.xcassets */,
-				A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */,
-				A8B889131E09DC4700327CD6 /* Info.plist */,
+				A85E0E4F1E0A5FBA00954BA1 /* Resources */,
+				A85E0E4E1E0A5FAF00954BA1 /* Sources */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -155,7 +179,6 @@
 			files = (
 				A8B889121E09DC4700327CD6 /* LaunchScreen.storyboard in Resources */,
 				A8B8890F1E09DC4700327CD6 /* Assets.xcassets in Resources */,
-				A8B8891A1E09DD5B00327CD6 /* Podfile in Resources */,
 				A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +252,7 @@
 				A8B8890C1E09DC4700327CD6 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */ = {
@@ -237,6 +261,7 @@
 				A8B889111E09DC4700327CD6 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -260,6 +285,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -309,6 +335,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -338,7 +365,7 @@
 			baseConfigurationReference = AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Library/Info.plist;
+				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
@@ -352,7 +379,7 @@
 			baseConfigurationReference = E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Library/Info.plist;
+				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
@@ -380,6 +407,7 @@
 				A8B889181E09DC4700327CD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
