@@ -29,7 +29,7 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 		VKSdk.wakeUpSession(scope) { state, error in
 			if error == nil {
 				self.delegates.enumerated().forEach() {
-					$1?.vkWorker(self, didWokeUpSessionWithState: state)
+					$1?.vkWorker?(self, didWokeUpSessionWithState: state)
 				}
 			}
 		}
@@ -53,8 +53,14 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 		self.UIDelegate = nil
 	}
 	
-	open func wakeUpSession(withCompletionHandler handler: @escaping (_ state: VKAuthorizationState, _ error: Error?) -> Void) {
-		VKSdk.wakeUpSession(self.scope, complete: handler)
+	open func wakeUpSession() {
+		VKSdk.wakeUpSession(self.scope) { state, error in
+			if error == nil {
+				self.delegates.enumerated().forEach {
+					$1?.vkWorker?(self, didWokeUpSessionWithState: state)
+				}
+			}
+		}
 	}
 	
 	open func authorize() {
@@ -64,36 +70,36 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 	// MARK: - VKSdk Delegate
 	func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
 		self.delegates.enumerated().forEach {
-			$1?.vkWorker(self, didFinishAuthorizationWithResult: result)
+			$1?.vkWorker?(self, didFinishAuthorizationWithResult: result)
 		}
 	}
 	
 	func vkSdkUserAuthorizationFailed() {
 		self.delegates.enumerated().forEach {
-			$1?.vkWorkerDidFailAuthorization(self)
+			$1?.vkWorkerDidFailAuthorization?(self)
 		}
 	}
 	
 	func vkSdkTokenHasExpired(_ expiredToken: VKAccessToken!) {
 		self.delegates.enumerated().forEach {
-			$1?.vkWorkerTokenHasExpired(self)
+			$1?.vkWorkerTokenHasExpired?(self)
 		}
 	}
 	
 	// MARK: - VKSdk UI Delegate
 	func vkSdkNeedCaptchaEnter(_ captchaError: VKError!) {
-		self.UIDelegate?.vkWorker(self, needsCaptchaEnterWithError: captchaError)
+		self.UIDelegate?.vkWorker?(self, needsCaptchaEnterWithError: captchaError)
 	}
 	
 	func vkSdkDidDismiss(_ controller: UIViewController!) {
-		self.UIDelegate?.vkWorker(self, didDismissViewController: controller)
+		self.UIDelegate?.vkWorker?(self, didDismissViewController: controller)
 	}
 	
 	func vkSdkWillDismiss(_ controller: UIViewController!) {
-		self.UIDelegate?.vkWorker(self, willDismissViewController: controller)
+		self.UIDelegate?.vkWorker?(self, willDismissViewController: controller)
 	}
 	
 	func vkSdkShouldPresent(_ controller: UIViewController!) {
-		self.UIDelegate?.vkWorker(self, shouldPresentViewController: controller)
+		self.UIDelegate?.vkWorker?(self, shouldPresentViewController: controller)
 	}
 }

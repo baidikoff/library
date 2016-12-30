@@ -21,11 +21,6 @@ class BooksTableViewController: UITableViewController {
 		}
 	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()		
-		self.navigationController?.navigationBar.isTranslucent = true
-	}
-	
 	open func fetch() {
 		do {
 			try worker.fetch() { self.books = $0 }

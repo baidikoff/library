@@ -22,11 +22,11 @@ public enum BooksException: Error {
 class BooksWorker {
 	
 	let container: CKContainer
-	let publicDB: CKDatabase
+	let privateDatabase: CKDatabase
  
 	init() {
 		self.container = CKContainer.default()
-		self.publicDB = self.container.publicCloudDatabase
+		self.privateDatabase = self.container.privateCloudDatabase
 	}
 	
 	open func fetch(_ completionHandler: @escaping (Array<Book>) -> Void) throws {
@@ -63,22 +63,24 @@ class BooksWorker {
 		}
 		
 		let query = CKQuery(recordType: record, predicate: NSPredicate(format: "TRUEPREDICATE"))
-		self.publicDB.perform(query, inZoneWith: nil) { results, error in
-			if error == nil {
-				results?.forEach() { record in
-					if let urlString = record["URL"] as? String {
-						let url = URL(string: urlString)
-						let name = record["Name"] as? String
-
-						if name != nil && url != nil {
-							books.append(Book(name: name!, url: url!))
-						}
+		self.privateDatabase.perform(query, inZoneWith: nil) { results, error in
+			if error != nil {
+				return
+			}
+			
+			results?.forEach() { record in
+				if let urlString = record["URL"] as? String {
+					let url = URL(string: urlString)
+					let name = record["Name"] as? String
+					
+					if name != nil && url != nil {
+						books.append(Book(name: name!, url: url!))
 					}
 				}
-				
-				DispatchQueue.main.async {
-					completionHandler(books)
-				}
+			}
+			
+			DispatchQueue.main.async {
+				completionHandler(books)
 			}
 		}
 	}
