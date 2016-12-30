@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04764B3732F807C2DFDBF67 /* Pods_Library.framework */; };
+		A800FB621E15CF8D0050FC22 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A800FB611E15CF8D0050FC22 /* CloudKit.framework */; };
 		A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */; };
+		A8115FD31E11978F00223DEE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD21E11978F00223DEE /* Book.swift */; };
+		A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD41E119A0000223DEE /* BooksWorker.swift */; };
+		A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD61E119A3700223DEE /* SingleBookViewController.swift */; };
+		A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD81E119A4D00223DEE /* AccountViewController.swift */; };
 		A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */; };
 		A85E0E5E1E0AD90D00954BA1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E5D1E0AD90D00954BA1 /* LoginViewController.swift */; };
 		A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E601E0B328900954BA1 /* VKWorker.swift */; };
@@ -21,7 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A800FB601E15CF7E0050FC22 /* Library.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Library.entitlements; sourceTree = "<group>"; };
+		A800FB611E15CF8D0050FC22 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
+		A8115FD21E11978F00223DEE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		A8115FD41E119A0000223DEE /* BooksWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksWorker.swift; sourceTree = "<group>"; };
+		A8115FD61E119A3700223DEE /* SingleBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleBookViewController.swift; sourceTree = "<group>"; };
+		A8115FD81E119A4D00223DEE /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+LibraryExtensions.swift"; sourceTree = "<group>"; };
 		A85E0E5D1E0AD90D00954BA1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A85E0E601E0B328900954BA1 /* VKWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorker.swift; sourceTree = "<group>"; };
@@ -43,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A800FB621E15CF8D0050FC22 /* CloudKit.framework in Frameworks */,
 				A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */,
 				100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */,
 			);
@@ -54,6 +66,7 @@
 		5423722DE13811D194925E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A800FB611E15CF8D0050FC22 /* CloudKit.framework */,
 				A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */,
 				B04764B3732F807C2DFDBF67 /* Pods_Library.framework */,
 			);
@@ -106,6 +119,8 @@
 		A85E0E531E0AB5A100954BA1 /* Books Model */ = {
 			isa = PBXGroup;
 			children = (
+				A8115FD21E11978F00223DEE /* Book.swift */,
+				A8115FD41E119A0000223DEE /* BooksWorker.swift */,
 			);
 			name = "Books Model";
 			sourceTree = "<group>";
@@ -137,6 +152,7 @@
 		A85E0E591E0AB97000954BA1 /* Single Book View */ = {
 			isa = PBXGroup;
 			children = (
+				A8115FD61E119A3700223DEE /* SingleBookViewController.swift */,
 			);
 			name = "Single Book View";
 			sourceTree = "<group>";
@@ -144,6 +160,7 @@
 		A85E0E5A1E0AB97B00954BA1 /* Account View */ = {
 			isa = PBXGroup;
 			children = (
+				A8115FD81E119A4D00223DEE /* AccountViewController.swift */,
 			);
 			name = "Account View";
 			sourceTree = "<group>";
@@ -178,6 +195,7 @@
 		A8B889061E09DC4700327CD6 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				A800FB601E15CF7E0050FC22 /* Library.entitlements */,
 				A85E0E4F1E0A5FBA00954BA1 /* Resources */,
 				A85E0E4E1E0A5FAF00954BA1 /* Sources */,
 			);
@@ -220,7 +238,15 @@
 					A8B889031E09DC4700327CD6 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 76LJ97E96C;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -311,7 +337,11 @@
 				A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */,
 				A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */,
 				A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */,
+				A8115FD31E11978F00223DEE /* Book.swift in Sources */,
+				A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */,
 				A85E0E5E1E0AD90D00954BA1 /* LoginViewController.swift in Sources */,
+				A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */,
+				A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */,
 				A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */,
 				A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */,
 			);
@@ -441,12 +471,15 @@
 			baseConfigurationReference = AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				DEVELOPMENT_TEAM = 76LJ97E96C;
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3615ef11-c312-41c1-a1d8-87c3325c86d5";
+				PROVISIONING_PROFILE_SPECIFIER = "VKLibrary Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
@@ -457,12 +490,15 @@
 			baseConfigurationReference = E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				DEVELOPMENT_TEAM = 76LJ97E96C;
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3615ef11-c312-41c1-a1d8-87c3325c86d5";
+				PROVISIONING_PROFILE_SPECIFIER = "VKLibrary Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};

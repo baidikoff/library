@@ -64,12 +64,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="Qa8-QZ-TD2">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" red="0.97848200671927821" green="1" blue="0.96806026392082378" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <connections>
+                                <outlet property="delegate" destination="xvz-gi-Gyz" id="mWY-xe-5GQ"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CGe-3B-imx">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGe-3B-imx" id="zuv-iS-KFJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -80,8 +89,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Jxt-Zk-r5e"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="iFn-BO-vHm" id="zhI-ir-cmB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nX2-SO-mGT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="iFn-BO-vHm">
+                    <connections>
+                        <outlet property="delegate" destination="xvz-gi-Gyz" id="3fp-jO-hGc"/>
+                        <outlet property="searchBar" destination="Qa8-QZ-TD2" id="siw-1n-6WW"/>
+                        <outlet property="searchContentsController" destination="xvz-gi-Gyz" id="sId-ZY-sQn"/>
+                        <outlet property="searchResultsDataSource" destination="xvz-gi-Gyz" id="DK1-Lv-Mwa"/>
+                        <outlet property="searchResultsDelegate" destination="xvz-gi-Gyz" id="WAz-2m-bhG"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1829.5999999999999" y="138.98050974512745"/>
         </scene>
