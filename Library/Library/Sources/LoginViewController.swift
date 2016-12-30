@@ -36,7 +36,7 @@ class LoginViewController : UIViewController, VKWorkerUIDelegate, VKWorkerDelega
 	}
 	
 	override func viewDidLoad() {
-		self.worker = VKWorker()
+		self.worker = VKWorker(delegate: self)
 	}
 	
 	@IBAction func onLoginAction(_ sender: UIButton) {
@@ -45,6 +45,11 @@ class LoginViewController : UIViewController, VKWorkerUIDelegate, VKWorkerDelega
 	
 	func performSegue() {
 		performSegue(withIdentifier: toLibrarySegue, sender: self)
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		let destinationViewController = (segue.destination as! UINavigationController).topViewController as! BooksTableViewController
+		destinationViewController.fetch()
 	}
 	
 	// MARK: - VKWorker UI Delegate
@@ -66,6 +71,12 @@ class LoginViewController : UIViewController, VKWorkerUIDelegate, VKWorkerDelega
 	}
 	
 	// MARK: - VKWorker Delegate
+	func vkWorker(_ worker: VKWorker, didWokeUpSessionWithState state: VKAuthorizationState) {
+		if state == .authorized {
+			performSegue()
+		}
+	}
+	
 	func vkWorker(_ worker: VKWorker, didFinishAuthorizationWithResult result: VKAuthorizationResult) {
 		performSegue()
 	}

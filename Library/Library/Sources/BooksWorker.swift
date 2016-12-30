@@ -7,20 +7,32 @@
 //
 
 import Foundation
+import CloudKit
 
+let record = "Book"
 let booksPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first
 
 public enum BooksException: Error {
 	case unknownPath
 	case unknownFile
+	
+	case iCloudFetchError
 }
 
 class BooksWorker {
 	
-	open func fetch() throws -> Array<Book> {
+	let container: CKContainer
+	let publicDB: CKDatabase
+ 
+	init() {
+		self.container = CKContainer.default()
+		self.publicDB = self.container.publicCloudDatabase
+	}
+	
+	open func fetch(_ completionHandler: @escaping (Array<Book>) -> Void) throws {
 		var books = Array<Book>()
-		let fileManager = FileManager.default
 		
+		let fileManager = FileManager.default
 		var isDirectory : ObjCBool = false
 		
 		guard let path = booksPath else {
@@ -50,6 +62,24 @@ class BooksWorker {
 			try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
 		}
 		
-		return books
+		let query = CKQuery(recordType: record, predicate: NSPredicate(format: "TRUEPREDICATE"))
+		self.publicDB.perform(query, inZoneWith: nil) { results, error in
+			if error == nil {
+				results?.forEach() { record in
+					if let urlString = record["URL"] as? String {
+						let url = URL(string: urlString)
+						let name = record["Name"] as? String
+
+						if name != nil && url != nil {
+							books.append(Book(name: name!, url: url!))
+						}
+					}
+				}
+				
+				DispatchQueue.main.async {
+					completionHandler(books)
+				}
+			}
+		}
 	}
 }

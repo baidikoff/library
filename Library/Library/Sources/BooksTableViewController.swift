@@ -14,6 +14,7 @@ class BooksTableViewController: UITableViewController {
 	
 	fileprivate var isSearchActive = false
 	fileprivate var worker = BooksWorker()
+	
 	fileprivate var books = Array<Book>() {
 		didSet {
 			self.tableView.reloadData()
@@ -21,13 +22,13 @@ class BooksTableViewController: UITableViewController {
 	}
 	
 	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		self.clearsSelectionOnViewWillAppear = false
+		super.viewDidLoad()		
 		self.navigationController?.navigationBar.isTranslucent = true
-		
+	}
+	
+	open func fetch() {
 		do {
-			self.books = try worker.fetch()
+			try worker.fetch() { self.books = $0 }
 		} catch let error {
 			print(error.localizedDescription)
 		}
@@ -41,6 +42,10 @@ extension BooksTableViewController {
 
 // MARK: - UITableViewController Data Source
 extension BooksTableViewController {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 100.0
+	}
+	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return isSearchActive ? 2 : 1
 	}
@@ -50,7 +55,8 @@ extension BooksTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BookTableViewCell
+		cell.book = self.books[indexPath.row]
 		return cell
 	}
 }

@@ -10,6 +10,7 @@ import Foundation
 import VK_ios_sdk
 
 protocol VKWorkerDelegate: class {
+	func vkWorker(_ worker: VKWorker, didWokeUpSessionWithState state: VKAuthorizationState) -> Void
 	func vkWorker(_ worker: VKWorker, didFinishAuthorizationWithResult result: VKAuthorizationResult) -> Void
 	func vkWorkerDidFailAuthorization(_ worker: VKWorker) -> Void
 	

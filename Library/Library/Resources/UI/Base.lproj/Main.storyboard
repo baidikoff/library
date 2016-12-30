@@ -56,10 +56,10 @@
             </objects>
             <point key="canvasLocation" x="165.59999999999999" y="138.98050974512745"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Books Table View Controller-->
         <scene sceneID="9CI-d6-h5p">
             <objects>
-                <tableViewController id="xvz-gi-Gyz" sceneMemberID="viewController">
+                <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9EA-iv-XYL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,13 +74,39 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" id="CGe-3B-imx">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="Library" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGe-3B-imx" id="zuv-iS-KFJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uFg-41-Th4">
+                                            <rect key="frame" x="8" y="8" width="84" height="84"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="uFg-41-Th4" secondAttribute="height" multiplier="1:1" id="XaI-kB-p01"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAf-4g-EqG">
+                                            <rect key="frame" x="100" y="40" width="267" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="jAf-4g-EqG" secondAttribute="trailing" id="5ml-D5-OZi"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="uFg-41-Th4" secondAttribute="bottom" id="9kB-2s-asj"/>
+                                        <constraint firstItem="jAf-4g-EqG" firstAttribute="centerY" secondItem="uFg-41-Th4" secondAttribute="centerY" id="FpM-lF-Gje"/>
+                                        <constraint firstItem="jAf-4g-EqG" firstAttribute="leading" secondItem="uFg-41-Th4" secondAttribute="trailing" constant="8" id="JOE-6P-51B"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="uFg-41-Th4" secondAttribute="leading" id="SU3-O6-13R"/>
+                                        <constraint firstAttribute="topMargin" secondItem="uFg-41-Th4" secondAttribute="top" id="cJv-49-CwB"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="bookCoverView" destination="uFg-41-Th4" id="EUa-Ku-WZz"/>
+                                    <outlet property="bookTitleLabel" destination="jAf-4g-EqG" id="EGr-bJ-GBC"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

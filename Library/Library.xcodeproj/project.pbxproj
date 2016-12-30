@@ -19,6 +19,7 @@
 		A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E601E0B328900954BA1 /* VKWorker.swift */; };
 		A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */; };
 		A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */; };
+		A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */; };
 		A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B889071E09DC4700327CD6 /* AppDelegate.swift */; };
 		A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890B1E09DC4700327CD6 /* Main.storyboard */; };
 		A8B8890F1E09DC4700327CD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890E1E09DC4700327CD6 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		A85E0E601E0B328900954BA1 /* VKWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorker.swift; sourceTree = "<group>"; };
 		A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorkerDelegate.swift; sourceTree = "<group>"; };
 		A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/VK-ios-sdk/VK_ios_sdk.framework"; sourceTree = "<group>"; };
+		A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		A8B889041E09DC4700327CD6 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8B889071E09DC4700327CD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8B8890C1E09DC4700327CD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */,
+				A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */,
 			);
 			name = "Books View";
 			sourceTree = "<group>";
@@ -238,7 +241,7 @@
 					A8B889031E09DC4700327CD6 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 76LJ97E96C;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 0;
@@ -337,6 +340,7 @@
 				A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */,
 				A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */,
 				A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */,
+				A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */,
 				A8115FD31E11978F00223DEE /* Book.swift in Sources */,
 				A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */,
 				A85E0E5E1E0AD90D00954BA1 /* LoginViewController.swift in Sources */,
@@ -472,14 +476,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
-				DEVELOPMENT_TEAM = 76LJ97E96C;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3615ef11-c312-41c1-a1d8-87c3325c86d5";
-				PROVISIONING_PROFILE_SPECIFIER = "VKLibrary Profile";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
@@ -491,14 +496,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
-				DEVELOPMENT_TEAM = 76LJ97E96C;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.baidikoff.Library;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3615ef11-c312-41c1-a1d8-87c3325c86d5";
-				PROVISIONING_PROFILE_SPECIFIER = "VKLibrary Profile";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};

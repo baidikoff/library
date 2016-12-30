@@ -17,14 +17,22 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 	private var delegates: Array<VKWorkerDelegate?>
 	private var UIDelegate: VKWorkerUIDelegate?
 	
-	override init() {
-		self.delegates = [VKWorkerDelegate]()
+	init(delegate: VKWorkerDelegate) {
+		self.delegates = [delegate]
 		
 		super.init()
 		
 		VKSdk.initialize(withAppId: appID)
 		VKSdk.instance().uiDelegate = self
 		VKSdk.instance().register(self)
+		
+		VKSdk.wakeUpSession(scope) { state, error in
+			if error == nil {
+				self.delegates.enumerated().forEach() {
+					$1?.vkWorker(self, didWokeUpSessionWithState: state)
+				}
+			}
+		}
 	}
 	
 	open func register(UIDelegate: VKWorkerUIDelegate) {
