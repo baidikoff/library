@@ -4,5 +4,7 @@ use_frameworks!
 target 'Library' do
 
 	pod 'VK-ios-sdk'
+	pod 'Alamofire', '~> 4.0'
+	pod 'SwiftyJSON'
 
 end
