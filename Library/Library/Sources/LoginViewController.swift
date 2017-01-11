@@ -28,7 +28,8 @@ class LoginViewController : UIViewController, VKWorkerUIDelegate, VKWorkerDelega
 	}
 
 	@IBAction func onLoginAction(_ sender: UIButton) {
-		worker?.authorize()
+		//worker?.authorize()
+		performSegue()
 	}
 	
 	func performSegue() {

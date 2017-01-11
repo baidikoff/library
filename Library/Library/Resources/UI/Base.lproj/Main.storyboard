@@ -56,7 +56,7 @@
             </objects>
             <point key="canvasLocation" x="165.59999999999999" y="138.98050974512745"/>
         </scene>
-        <!--Books Table View Controller-->
+        <!--Library-->
         <scene sceneID="9CI-d6-h5p">
             <objects>
                 <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
@@ -64,21 +64,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="Qa8-QZ-TD2">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="barTintColor" red="0.97848200671927821" green="1" blue="0.96806026392082378" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                            <connections>
-                                <outlet property="delegate" destination="xvz-gi-Gyz" id="mWY-xe-5GQ"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="Library" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGe-3B-imx" id="zuv-iS-KFJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uFg-41-Th4">
@@ -114,28 +105,26 @@
                             <outlet property="delegate" destination="xvz-gi-Gyz" id="7Fn-6W-Uhy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Jxt-Zk-r5e"/>
+                    <navigationItem key="navigationItem" title="Library" id="Jxt-Zk-r5e">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="accountIcon" style="plain" id="iEm-F3-UWD">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <connections>
+                                <segue destination="V9p-2l-oER" kind="show" identifier="toAccount" id="xfo-Zq-ef8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="searchDisplayController" destination="iFn-BO-vHm" id="zhI-ir-cmB"/>
+                        <segue destination="Xr9-Jv-0Iu" kind="show" identifier="toBook" id="jCl-fV-a9U"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nX2-SO-mGT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="iFn-BO-vHm">
-                    <connections>
-                        <outlet property="delegate" destination="xvz-gi-Gyz" id="3fp-jO-hGc"/>
-                        <outlet property="searchBar" destination="Qa8-QZ-TD2" id="siw-1n-6WW"/>
-                        <outlet property="searchContentsController" destination="xvz-gi-Gyz" id="sId-ZY-sQn"/>
-                        <outlet property="searchResultsDataSource" destination="xvz-gi-Gyz" id="DK1-Lv-Mwa"/>
-                        <outlet property="searchResultsDelegate" destination="xvz-gi-Gyz" id="WAz-2m-bhG"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1829.5999999999999" y="138.98050974512745"/>
+            <point key="canvasLocation" x="1661" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--Single Book View Controller-->
         <scene sceneID="qhN-Sg-s4I">
             <objects>
-                <viewController id="Xr9-Jv-0Iu" sceneMemberID="viewController">
+                <viewController id="Xr9-Jv-0Iu" customClass="SingleBookViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Ti-b6-oQm"/>
                         <viewControllerLayoutGuide type="bottom" id="nDv-11-Te2"/>
@@ -148,12 +137,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQd-Ud-10h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2678" y="139"/>
+            <point key="canvasLocation" x="2677.5999999999999" y="138.98050974512745"/>
         </scene>
-        <!--View Controller-->
+        <!--Account View Controller-->
         <scene sceneID="mqV-Rr-Tp6">
             <objects>
-                <viewController id="V9p-2l-oER" sceneMemberID="viewController">
+                <viewController id="V9p-2l-oER" customClass="AccountViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="brW-Lc-U58"/>
                         <viewControllerLayoutGuide type="bottom" id="lpw-FP-jkb"/>
@@ -188,6 +177,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="accountIcon" width="32" height="32"/>
         <image name="loginViewBackground" width="750" height="1334"/>
         <image name="loginViewButton" width="345" height="50"/>
     </resources>

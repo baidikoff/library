@@ -482,7 +482,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
 				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
@@ -502,7 +502,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
 				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
