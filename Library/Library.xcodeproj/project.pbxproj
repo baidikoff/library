@@ -18,7 +18,6 @@
 		A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */; };
 		A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */; };
 		A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */; };
-		A8A5F4C61E1974DC00A55291 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A5F4C51E1974DC00A55291 /* Alamofire.framework */; };
 		A8A5F4C81E1974E200A55291 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A5F4C71E1974E200A55291 /* SwiftyJSON.framework */; };
 		A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B889071E09DC4700327CD6 /* AppDelegate.swift */; };
 		A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890B1E09DC4700327CD6 /* Main.storyboard */; };
@@ -56,7 +55,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8A5F4C81E1974E200A55291 /* SwiftyJSON.framework in Frameworks */,
-				A8A5F4C61E1974DC00A55291 /* Alamofire.framework in Frameworks */,
 				A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */,
 				100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */,
 			);

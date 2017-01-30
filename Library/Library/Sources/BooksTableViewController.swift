@@ -65,9 +65,11 @@ class BooksTableViewController: UITableViewController {
 	// MARK: Books
 	open func fetch() {
 		do {
-			try worker.fetch() { self.books = $0 }
+			books = try worker.fetch()
 		} catch let error {
-			print(error.localizedDescription)
+			let alert = UIAlertController(error: error)
+			present(alert, animated: true, completion: nil)
+			books = nil
 		}
 	}
 	

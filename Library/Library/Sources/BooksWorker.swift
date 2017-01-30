@@ -9,13 +9,9 @@
 import Foundation
 import VK_ios_sdk
 import SwiftyJSON
+import FileKit
 
-private let record = "Book"
-private let booksPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first
-private let `extension` = ".pdf"
-private let truePredicate = NSPredicate(format: "TRUEPREDICATE")
-private let ckNameKey = "Name"
-private let ckUrlKey = "URL"
+private let booksDirectory = Path.userDocuments + "books"
 
 private let searchMethod = "docs.search"
 private let itemsKey = "items"
@@ -26,47 +22,25 @@ private let nameKey = "title"
 private let urlKey = "url"
 private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier?.appending(String(describing: BooksWorker.self)))!)
 
-public enum BooksException: Error {
-	case unknownPath
-	case unknownFile
-}
-
 class BooksWorker {
 	fileprivate var activeRequest: VKRequest?
 	
-	open func fetch(_ completionHandler: @escaping (Array<Book>) -> Void) throws {
+	open func fetch() throws -> Array<Book> {
 		var books = Array<Book>()
 		
-		let fileManager = FileManager.default
-		var isDirectory : ObjCBool = false
-		
-		guard let path = booksPath else {
-			throw BooksException.unknownPath
+		if !booksDirectory.exists {
+			try booksDirectory.createDirectory()
 		}
 		
-		if fileManager.fileExists(atPath: path, isDirectory: &isDirectory) {
-			if isDirectory.boolValue {
-				let directoryContents = try fileManager.contentsOfDirectory(atPath: path)
-				
-				directoryContents.enumerated().forEach() { _, element in
-					let url = URL(string: element)
-					
-					if let url = url {
-						var filename = url.lastPathComponent
-						
-						if filename.hasSuffix(`extension`) {
-							let book = Book(name: filename.characters.split(separator: ".").map(String.init).first!, url: url)
-							book.isDownloaded = true
-							books.append(book)
-						}
-					}
-				}
-			} else {
-				throw BooksException.unknownFile
-			}
-		} else {
-			try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
+		for bookPath in booksDirectory {
+			guard let bookName = bookPath.components.last?.rawValue.characters.split(separator: ".").map(String.init).first else { continue }
+			
+			let book = Book(name: bookName, path: bookPath)
+			book.isDownloaded = true
+			books.append(book)
 		}
+		
+		return books
 	}
 	
 	open func search(withPredicate predicate: String, offset: Int, count: Int, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
@@ -93,12 +67,12 @@ class BooksWorker {
 						continue
 					}
 					
-					if type == 1 && ext == "pdf" {
+					if type == 1 && ext == pdf {
 						let name = dictionary[nameKey]?.string
-						let url = URL(string: dictionary[urlKey]?.string ?? "")
+						let path = Path(dictionary[urlKey]?.string ?? "")
 						
-						if let name = name, let url = url {
-							books.append(Book(name: name, url: url))
+						if let name = name {
+							books.append(Book(name: name, path: path))
 						}
 					}
 				}

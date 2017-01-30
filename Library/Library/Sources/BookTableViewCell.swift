@@ -22,6 +22,6 @@ class BookTableViewCell: UITableViewCell {
 	}
 
 	@IBAction func download(_ sender: UIButton) {
-		
+		book?.download()
 	}
 }

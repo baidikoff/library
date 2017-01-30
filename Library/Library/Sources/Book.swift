@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import FileKit
 
 class Book {
 	open let name: String
-	open let url: URL
+	open let path: Path
 	open var isDownloaded = false
 	
-	init(name: String, url: URL) {
+	init(name: String, path: Path) {
 		self.name = name
-		self.url = url
+		self.path = path
 	}
 	
 	open func download() {
