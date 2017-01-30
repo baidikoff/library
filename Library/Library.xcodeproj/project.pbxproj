@@ -8,14 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04764B3732F807C2DFDBF67 /* Pods_Library.framework */; };
-		A800FB621E15CF8D0050FC22 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A800FB611E15CF8D0050FC22 /* CloudKit.framework */; };
 		A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */; };
 		A8115FD31E11978F00223DEE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD21E11978F00223DEE /* Book.swift */; };
 		A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD41E119A0000223DEE /* BooksWorker.swift */; };
 		A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD61E119A3700223DEE /* SingleBookViewController.swift */; };
 		A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD81E119A4D00223DEE /* AccountViewController.swift */; };
 		A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */; };
-		A85E0E5E1E0AD90D00954BA1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E5D1E0AD90D00954BA1 /* LoginViewController.swift */; };
 		A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E601E0B328900954BA1 /* VKWorker.swift */; };
 		A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */; };
 		A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */; };
@@ -29,15 +27,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A800FB601E15CF7E0050FC22 /* Library.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Library.entitlements; sourceTree = "<group>"; };
-		A800FB611E15CF8D0050FC22 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 		A8115FD21E11978F00223DEE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		A8115FD41E119A0000223DEE /* BooksWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksWorker.swift; sourceTree = "<group>"; };
 		A8115FD61E119A3700223DEE /* SingleBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleBookViewController.swift; sourceTree = "<group>"; };
 		A8115FD81E119A4D00223DEE /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+LibraryExtensions.swift"; sourceTree = "<group>"; };
-		A85E0E5D1E0AD90D00954BA1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A85E0E601E0B328900954BA1 /* VKWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorker.swift; sourceTree = "<group>"; };
 		A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorkerDelegate.swift; sourceTree = "<group>"; };
 		A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/VK-ios-sdk/VK_ios_sdk.framework"; sourceTree = "<group>"; };
@@ -62,7 +57,6 @@
 			files = (
 				A8A5F4C81E1974E200A55291 /* SwiftyJSON.framework in Frameworks */,
 				A8A5F4C61E1974DC00A55291 /* Alamofire.framework in Frameworks */,
-				A800FB621E15CF8D0050FC22 /* CloudKit.framework in Frameworks */,
 				A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */,
 				100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */,
 			);
@@ -76,7 +70,6 @@
 			children = (
 				A8A5F4C71E1974E200A55291 /* SwiftyJSON.framework */,
 				A8A5F4C51E1974DC00A55291 /* Alamofire.framework */,
-				A800FB611E15CF8D0050FC22 /* CloudKit.framework */,
 				A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */,
 				B04764B3732F807C2DFDBF67 /* Pods_Library.framework */,
 			);
@@ -96,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				A8B889071E09DC4700327CD6 /* AppDelegate.swift */,
-				A85E0E571E0AB95900954BA1 /* Login View */,
 				A85E0E581E0AB96400954BA1 /* Books View */,
 				A85E0E591E0AB97000954BA1 /* Single Book View */,
 				A85E0E5A1E0AB97B00954BA1 /* Account View */,
@@ -141,14 +133,6 @@
 				A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */,
 			);
 			name = Utils;
-			sourceTree = "<group>";
-		};
-		A85E0E571E0AB95900954BA1 /* Login View */ = {
-			isa = PBXGroup;
-			children = (
-				A85E0E5D1E0AD90D00954BA1 /* LoginViewController.swift */,
-			);
-			name = "Login View";
 			sourceTree = "<group>";
 		};
 		A85E0E581E0AB96400954BA1 /* Books View */ = {
@@ -206,7 +190,6 @@
 		A8B889061E09DC4700327CD6 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				A800FB601E15CF7E0050FC22 /* Library.entitlements */,
 				A85E0E4F1E0A5FBA00954BA1 /* Resources */,
 				A85E0E4E1E0A5FAF00954BA1 /* Sources */,
 			);
@@ -243,7 +226,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Nick Baidikoff";
 				TargetAttributes = {
 					A8B889031E09DC4700327CD6 = {
@@ -255,7 +238,7 @@
 								enabled = 0;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -351,7 +334,6 @@
 				A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */,
 				A8115FD31E11978F00223DEE /* Book.swift in Sources */,
 				A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */,
-				A85E0E5E1E0AD90D00954BA1 /* LoginViewController.swift in Sources */,
 				A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */,
 				A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */,
 				A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */,
@@ -424,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -469,7 +451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = Resources/Library.h;
@@ -482,8 +464,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
-				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Library/Resources/Info.plist;
@@ -502,8 +484,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
-				CODE_SIGN_ENTITLEMENTS = Library/Library.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Library/Resources/Info.plist;

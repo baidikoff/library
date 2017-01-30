@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="42y-w9-g67">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,52 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginViewBackground" translatesAutoresizingMaskIntoConstraints="NO" id="NHQ-pJ-sxU">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEL-xI-9Rh">
-                                <rect key="frame" x="16" y="610" width="343" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="WEL-xI-9Rh" secondAttribute="height" multiplier="7:1" id="G01-fH-hFs"/>
-                                </constraints>
-                                <state key="normal" image="loginViewButton"/>
-                                <connections>
-                                    <action selector="onLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0RL-jE-uuE"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WEL-xI-9Rh" secondAttribute="bottom" constant="8" id="G8p-Gq-gjC"/>
-                            <constraint firstItem="NHQ-pJ-sxU" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="J6G-V3-IRg"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="WEL-xI-9Rh" secondAttribute="leading" id="K6b-hp-PGI"/>
-                            <constraint firstItem="NHQ-pJ-sxU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Qie-CY-tF1"/>
-                            <constraint firstItem="NHQ-pJ-sxU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VWQ-Su-FLe"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="WEL-xI-9Rh" secondAttribute="trailing" id="Xkz-Un-0mv"/>
-                            <constraint firstAttribute="trailing" secondItem="NHQ-pJ-sxU" secondAttribute="trailing" id="ZQw-Jz-BTP"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="loginButton" destination="WEL-xI-9Rh" id="cK5-aq-spC"/>
-                        <segue destination="42y-w9-g67" kind="presentation" identifier="toLibrary" modalTransitionStyle="flipHorizontal" id="bZT-sZ-E74"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="165.59999999999999" y="138.98050974512745"/>
-        </scene>
         <!--Library-->
         <scene sceneID="9CI-d6-h5p">
             <objects>
@@ -72,31 +26,44 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uFg-41-Th4">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultBookIcon" translatesAutoresizingMaskIntoConstraints="NO" id="uFg-41-Th4">
                                             <rect key="frame" x="8" y="8" width="84" height="84"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="uFg-41-Th4" secondAttribute="height" multiplier="1:1" id="XaI-kB-p01"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAf-4g-EqG">
-                                            <rect key="frame" x="100" y="40" width="267" height="21"/>
+                                            <rect key="frame" x="100" y="40" width="209" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3X-6K-fpM">
+                                            <rect key="frame" x="317" y="24" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="r3X-6K-fpM" secondAttribute="height" multiplier="1:1" id="2Gc-af-nRM"/>
+                                                <constraint firstAttribute="width" constant="50" id="WDT-Y8-9N5"/>
+                                            </constraints>
+                                            <state key="normal" title="Button" image="downloadButton"/>
+                                            <connections>
+                                                <action selector="download:" destination="CGe-3B-imx" eventType="touchUpInside" id="MXb-1v-Ota"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="jAf-4g-EqG" secondAttribute="trailing" id="5ml-D5-OZi"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="uFg-41-Th4" secondAttribute="bottom" id="9kB-2s-asj"/>
+                                        <constraint firstItem="r3X-6K-fpM" firstAttribute="centerY" secondItem="zuv-iS-KFJ" secondAttribute="centerY" id="0w0-BL-06E"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="r3X-6K-fpM" secondAttribute="trailing" id="2pn-XE-TiY"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="uFg-41-Th4" secondAttribute="bottom" constant="-1" id="9kB-2s-asj"/>
                                         <constraint firstItem="jAf-4g-EqG" firstAttribute="centerY" secondItem="uFg-41-Th4" secondAttribute="centerY" id="FpM-lF-Gje"/>
                                         <constraint firstItem="jAf-4g-EqG" firstAttribute="leading" secondItem="uFg-41-Th4" secondAttribute="trailing" constant="8" id="JOE-6P-51B"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="uFg-41-Th4" secondAttribute="leading" id="SU3-O6-13R"/>
                                         <constraint firstAttribute="topMargin" secondItem="uFg-41-Th4" secondAttribute="top" id="cJv-49-CwB"/>
+                                        <constraint firstItem="r3X-6K-fpM" firstAttribute="leading" secondItem="jAf-4g-EqG" secondAttribute="trailing" constant="8" id="t5Z-cJ-vZB"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="bookCoverView" destination="uFg-41-Th4" id="EUa-Ku-WZz"/>
                                     <outlet property="bookTitleLabel" destination="jAf-4g-EqG" id="EGr-bJ-GBC"/>
+                                    <outlet property="downloadButton" destination="r3X-6K-fpM" id="MGt-ug-0PF"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -106,7 +73,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Library" id="Jxt-Zk-r5e">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="accountIcon" style="plain" id="iEm-F3-UWD">
+                        <barButtonItem key="leftBarButtonItem" image="accountIcon" style="done" id="iEm-F3-UWD">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <segue destination="V9p-2l-oER" kind="show" identifier="toAccount" id="xfo-Zq-ef8"/>
@@ -119,7 +86,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nX2-SO-mGT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1661" y="139"/>
+            <point key="canvasLocation" x="1713" y="139"/>
         </scene>
         <!--Single Book View Controller-->
         <scene sceneID="qhN-Sg-s4I">
@@ -137,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQd-Ud-10h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2677.5999999999999" y="138.98050974512745"/>
+            <point key="canvasLocation" x="2678" y="139"/>
         </scene>
         <!--Account View Controller-->
         <scene sceneID="mqV-Rr-Tp6">
@@ -150,12 +117,36 @@
                     <view key="view" contentMode="scaleToFill" id="b4j-Tu-kT8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-pM-6R3">
+                                <rect key="frame" x="87" y="72" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="B85-wO-kSJ"/>
+                                    <constraint firstAttribute="width" secondItem="1j1-pM-6R3" secondAttribute="height" multiplier="1:1" id="KrW-DI-OeT"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NsG-rL-eAT">
+                                <rect key="frame" x="166.5" y="280" width="42" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="M9e-L7-han"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NsG-rL-eAT" firstAttribute="centerX" secondItem="b4j-Tu-kT8" secondAttribute="centerX" id="D9S-ki-noA"/>
+                            <constraint firstItem="1j1-pM-6R3" firstAttribute="top" secondItem="brW-Lc-U58" secondAttribute="bottom" constant="8" id="GT1-dt-R4q"/>
+                            <constraint firstItem="1j1-pM-6R3" firstAttribute="centerX" secondItem="b4j-Tu-kT8" secondAttribute="centerX" id="enS-of-0RJ"/>
+                            <constraint firstItem="NsG-rL-eAT" firstAttribute="top" secondItem="1j1-pM-6R3" secondAttribute="bottom" constant="8" id="sXX-Pt-F8f"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bte-x4-adY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1105" y="-672"/>
+            <point key="canvasLocation" x="2677.5999999999999" y="-571.66416791604206"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JTO-cb-WJ7">
@@ -173,12 +164,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GLi-qW-mLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="888.79999999999995" y="138.98050974512745"/>
+            <point key="canvasLocation" x="889" y="139"/>
         </scene>
     </scenes>
     <resources>
         <image name="accountIcon" width="32" height="32"/>
-        <image name="loginViewBackground" width="750" height="1334"/>
-        <image name="loginViewButton" width="345" height="50"/>
+        <image name="defaultBookIcon" width="32" height="32"/>
+        <image name="downloadButton" width="50" height="50"/>
     </resources>
 </document>

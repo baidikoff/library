@@ -10,17 +10,18 @@ import UIKit
 
 class BookTableViewCell: UITableViewCell {
 	
+	@IBOutlet weak var bookTitleLabel: UILabel!
+	@IBOutlet weak var downloadButton: UIButton!
+	
 	open var book : Book? {
 		didSet {
 			bookTitleLabel.text = book?.name
+			accessoryType = (book?.isDownloaded ?? false) ? .disclosureIndicator : .none
+			downloadButton.isHidden = book?.isDownloaded ?? false
 		}
 	}
-	
-	@IBOutlet weak var bookCoverView: UIImageView! {
-		didSet {
-			bookCoverView.image = #imageLiteral(resourceName: "defaultBookIcon")
-		}
+
+	@IBAction func download(_ sender: UIButton) {
+		
 	}
-	
-	@IBOutlet weak var bookTitleLabel: UILabel!
 }

@@ -9,13 +9,33 @@
 import Foundation
 import VK_ios_sdk
 
-class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
+class VKWorker : NSObject {
+	
+	open var authorizationResult: VKAuthorizationResult? {
+		get {
+			return result
+		}
+	}
+	
+	open var authorizationState: VKAuthorizationState? {
+		get {
+			return state
+		}
+	}
+	
+	fileprivate var result: VKAuthorizationResult? {
+		didSet {
+			state = result?.state
+		}
+	}
+	
+	fileprivate var state: VKAuthorizationState?
+	
+	fileprivate var delegates: Array<VKWorkerDelegate?>
+	fileprivate var UIDelegate: VKWorkerUIDelegate?
 	
 	private let appID = "5245876"
-	private let scope = [VK_PER_DOCS, VK_PER_NOTIFICATIONS, VK_PER_WALL, VK_PER_STATUS, VK_PER_OFFLINE]
-	
-	private var delegates: Array<VKWorkerDelegate?>
-	private var UIDelegate: VKWorkerUIDelegate?
+	private let scope = [VK_PER_DOCS, VK_PER_OFFLINE]
 	
 	init(delegate: VKWorkerDelegate) {
 		self.delegates = [delegate]
@@ -27,9 +47,10 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 		VKSdk.instance().register(self)
 		
 		VKSdk.wakeUpSession(scope) { state, error in
+			self.state = state
 			if error == nil {
-				self.delegates.enumerated().forEach() {
-					$1?.vkWorker?(self, didWokeUpSessionWithState: state)
+				for delegate in self.delegates {
+					delegate?.vkWorker?(self, didWokeUpSessionWithState: state)
 				}
 			}
 		}
@@ -46,29 +67,26 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 	}
 	
 	open func unregister(delegate: VKWorkerDelegate) {
-		self.delegates = self.delegates.filter{$0 !== delegate}
+		self.delegates = self.delegates.filter { $0 !== delegate }
 	}
 	
 	open func unregister(UIDelegate: VKWorkerUIDelegate) {
 		self.UIDelegate = nil
 	}
 	
-	open func wakeUpSession() {
-		VKSdk.wakeUpSession(self.scope) { state, error in
-			if error == nil {
-				self.delegates.enumerated().forEach {
-					$1?.vkWorker?(self, didWokeUpSessionWithState: state)
-				}
-			}
-		}
-	}
-	
 	open func authorize() {
 		VKSdk.authorize(self.scope)
 	}
 	
-	// MARK: - VKSdk Delegate
+	open func unauthorize() {
+		VKSdk.forceLogout()
+	}
+}
+
+// MARK: - VKSdk Delegate
+extension VKWorker : VKSdkDelegate {
 	func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
+		self.result = result
 		self.delegates.enumerated().forEach {
 			$1?.vkWorker?(self, didFinishAuthorizationWithResult: result)
 		}
@@ -85,8 +103,10 @@ class VKWorker : NSObject, VKSdkDelegate, VKSdkUIDelegate {
 			$1?.vkWorkerTokenHasExpired?(self)
 		}
 	}
-	
-	// MARK: - VKSdk UI Delegate
+}
+
+// MARK: - VKSdk UI Delegate
+extension VKWorker : VKSdkUIDelegate {
 	func vkSdkNeedCaptchaEnter(_ captchaError: VKError!) {
 		self.UIDelegate?.vkWorker?(self, needsCaptchaEnterWithError: captchaError)
 	}

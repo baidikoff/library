@@ -7,35 +7,32 @@
 //
 
 import Foundation
-import CloudKit
 import VK_ios_sdk
 import SwiftyJSON
+
+private let record = "Book"
+private let booksPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first
+private let `extension` = ".pdf"
+private let truePredicate = NSPredicate(format: "TRUEPREDICATE")
+private let ckNameKey = "Name"
+private let ckUrlKey = "URL"
+
+private let searchMethod = "docs.search"
+private let itemsKey = "items"
+private let typeKey = "type"
+private let extensionKey = "ext"
+private let pdf = "pdf"
+private let nameKey = "title"
+private let urlKey = "url"
+private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier?.appending(String(describing: BooksWorker.self)))!)
 
 public enum BooksException: Error {
 	case unknownPath
 	case unknownFile
-	
-	case iCloudFetchError
 }
 
 class BooksWorker {
-	
-	let container: CKContainer
-	let privateDatabase: CKDatabase
-	
 	fileprivate var activeRequest: VKRequest?
- 
-	init() {
-		self.container = CKContainer.default()
-		self.privateDatabase = self.container.privateCloudDatabase
-	}
-	
-	private let record = "Book"
-	private let booksPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first
-	private let `extension` = ".pdf"
-	private let truePredicate = NSPredicate(format: "TRUEPREDICATE")
-	private let ckNameKey = "Name"
-	private let ckUrlKey = "URL"
 	
 	open func fetch(_ completionHandler: @escaping (Array<Book>) -> Void) throws {
 		var books = Array<Book>()
@@ -54,12 +51,13 @@ class BooksWorker {
 				directoryContents.enumerated().forEach() { _, element in
 					let url = URL(string: element)
 					
-					if url != nil {
-						var filename = url!.lastPathComponent
+					if let url = url {
+						var filename = url.lastPathComponent
 						
 						if filename.hasSuffix(`extension`) {
-							filename = filename.characters.split(separator: ".").map(String.init).first!
-							books.append(Book(name: filename, url: url!))
+							let book = Book(name: filename.characters.split(separator: ".").map(String.init).first!, url: url)
+							book.isDownloaded = true
+							books.append(book)
 						}
 					}
 				}
@@ -69,60 +67,44 @@ class BooksWorker {
 		} else {
 			try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
 		}
-		
-		let query = CKQuery(recordType: record, predicate: truePredicate)
-		self.privateDatabase.perform(query, inZoneWith: nil) { results, error in
-			if error != nil {
-				return
-			}
-			
-			results?.forEach() { record in
-				if let urlString = record[self.ckUrlKey] as? String {
-					let url = URL(string: urlString)
-					let name = record[self.ckNameKey] as? String
-					
-					if name != nil && url != nil {
-						books.append(Book(name: name!, url: url!))
-					}
-				}
-			}
-			
-			DispatchQueue.main.async {
-				completionHandler(books)
-			}
-		}
 	}
 	
-	private let searchMethod = "docs.search"
-	private let itemsKey = "items"
-	private let typeKey = "type"
-	private let extensionKey = "ext"
-	private let pdf = "pdf"
-	private let nameKey = "name"
-	private let urlKey = "url"
-	
 	open func search(withPredicate predicate: String, offset: Int, count: Int, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
-		activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset, VK_API_COUNT: count])
-		activeRequest?.execute(resultBlock: { responce in
-			var books = Array<Book>()
-			let json = JSON(responce?.json as! Dictionary)
-			let items = json[self.itemsKey].array
-			items?.enumerated().forEach { offset, element in
-				if element[self.typeKey].uInt8 == 1, element[self.extensionKey].string == self.pdf {
-					let name = element[self.nameKey].string
-					let url = URL(string: element[self.urlKey].string!)
-					
-					if let name = name, let url = url {
-						books.append(Book(name: name, url: url))
+		queue.async {
+			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset, VK_API_COUNT: 100])
+			self.activeRequest?.execute(resultBlock: { responce in
+				var books = Array<Book>()
+				let json = JSON(responce?.json as! Dictionary<String, Any>)
+				
+				defer {
+					DispatchQueue.main.async {
+						completionHandler(books)
 					}
 				}
+				
+				guard let items = json[itemsKey].array else {
+					return
+				}
+				
+				for item: JSON in items {
+					guard let dictionary = item.dictionary,
+								let type = dictionary[typeKey]?.uInt8,
+								let ext = dictionary[extensionKey]?.string else {
+						continue
+					}
+					
+					if type == 1 && ext == "pdf" {
+						let name = dictionary[nameKey]?.string
+						let url = URL(string: dictionary[urlKey]?.string ?? "")
+						
+						if let name = name, let url = url {
+							books.append(Book(name: name, url: url))
+						}
+					}
+				}
+			}) { error in
+				print(error?.localizedDescription ?? "hello")
 			}
-			
-			DispatchQueue.main.async {
-				completionHandler(books)
-			}
-		}) { error in
-			print(error?.localizedDescription ?? "hello")
 		}
 	}
 	

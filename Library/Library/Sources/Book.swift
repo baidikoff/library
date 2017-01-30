@@ -9,11 +9,16 @@
 import Foundation
 
 class Book {
-	var name: String
-	var url: URL
+	open let name: String
+	open let url: URL
+	open var isDownloaded = false
 	
-	init(name: String, url:URL) {
+	init(name: String, url: URL) {
 		self.name = name
 		self.url = url
+	}
+	
+	open func download() {
+		isDownloaded = true
 	}
 }

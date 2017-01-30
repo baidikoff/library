@@ -7,46 +7,62 @@
 //
 
 import UIKit
+import VK_ios_sdk
 
 let cellIdentifier = "bookCell"
 let toBookSegueIdentifier = "toBook"
 
 class BooksTableViewController: UITableViewController {
+	// MARK: Properties
 	fileprivate var isSearchActive = false
 	fileprivate var worker = BooksWorker()
-	
+		
 	fileprivate var offset = 0
 	fileprivate let count = 50
 	
-	fileprivate var books = Array<Book>() {
+	fileprivate var books: Array<Book>? {
 		didSet {
-			self.tableView.reloadData()
+			reload()
+		}
+	}
+	
+	fileprivate var vkWorker: VKWorker? {
+		didSet {
+			vkWorker?.register(UIDelegate: self)
 		}
 	}
 	
 	fileprivate var filteredBooks: Array<Book>? {
 		didSet {
-			self.tableView.reloadData()
+			isSearchActive = filteredBooks != nil
+			reload()
 		}
 	}
 	
-	fileprivate var searchController: UISearchController? {
-		didSet {
-			searchController?.searchResultsUpdater = self
-			searchController?.hidesNavigationBarDuringPresentation = false
-			searchController?.dimsBackgroundDuringPresentation = false
-			
-			searchController?.searchBar.barTintColor = UIColor(hue: 1.0, saturation: 0.0, brightness: 1.0, alpha: 1.0)
-			searchController?.searchBar.placeholder = "Search"
-			
-			tableView.tableHeaderView = searchController?.searchBar
-		}
-	}
+	fileprivate var searchController: UISearchController = {
+		let searchController = UISearchController(searchResultsController: nil)
+		
+		searchController.hidesNavigationBarDuringPresentation = false
+		searchController.dimsBackgroundDuringPresentation = false
+		searchController.searchBar.barTintColor = UIColor(hue: 1.0, saturation: 0.0, brightness: 1.0, alpha: 1.0)
+		searchController.searchBar.placeholder = "Search"
+		
+		return searchController
+	}()
 	
+	// MARK: VC Lifecycle
 	override func viewDidLoad() {
-		searchController = UISearchController(searchResultsController: nil)
+		books = [Book]()
+		vkWorker = VKWorker(delegate: self)
+		
+		searchController.delegate = self
+		searchController.searchResultsUpdater = self
+		tableView.tableHeaderView = searchController.searchBar
+		
+		fetch()
 	}
 	
+	// MARK: Books
 	open func fetch() {
 		do {
 			try worker.fetch() { self.books = $0 }
@@ -60,10 +76,65 @@ class BooksTableViewController: UITableViewController {
 		worker.search(withPredicate: predicate, offset: offset, count: count) { self.filteredBooks = $0 }
 	}
 	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let identifier = segue.identifier, identifier == toBookSegueIdentifier {
-			
+	fileprivate func reload() {
+		tableView.reloadData()
+		if let state = vkWorker?.authorizationState, state != .authorized {
+			showUnathorizedAlert()
+		} else {
+			if !isSearchActive && books?.count == 0 {
+				showEmptyTableView()
+			} else {
+				tableView.clearBackground()
+			}
 		}
+	}
+	
+	// MARK: Empty tableView
+	fileprivate func showEmptyTableView() {
+		let message = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: view.bounds.height))
+		message.text = "It's time to search for some books"
+		message.textColor = .black
+		message.textAlignment = .center
+		message.backgroundColor = .white
+		
+		tableView.setBackground(view: message)
+	}
+	
+	fileprivate func showUnathorizedAlert() {
+		let alert = UIAlertController(title: "Authorization", message: "You need to be authorized to VK to search for the documents", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Login", style: .default, handler: {
+			if $0.style == .default {
+				self.vkWorker?.authorize()
+			}
+		}))
+		
+		present(alert, animated: true, completion: nil)
+	}
+	
+	// MARK: Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let identifier = segue.identifier {
+			if identifier == toBookSegueIdentifier {
+			
+			}
+		}
+	}
+}
+
+// MARK: - VKWorker Delegate
+extension BooksTableViewController: VKWorkerDelegate {
+	func vkWorker(_ worker: VKWorker, didWokeUpSessionWithState state: VKAuthorizationState) -> Void {
+	}
+	
+	func vkWorker(_ worker: VKWorker, didFinishAuthorizationWithResult result: VKAuthorizationResult) -> Void {
+	}
+}
+
+// MARK: - VKWorker UIDelegate
+extension BooksTableViewController: VKWorkerUIDelegate {
+	func vkWorker(_ worker: VKWorker, shouldPresentViewController viewController: UIViewController) {
+		present(viewController, animated: true, completion: nil)
 	}
 }
 
@@ -77,27 +148,49 @@ extension BooksTableViewController {
 // MARK: - UITableViewController Data Source
 extension BooksTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 100.0
+		return 70.0
 	}
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return isSearchActive ? 2 : 1
+		return 1
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return books.count
+		return isSearchActive ? filteredBooks?.count ?? 0 : books?.count ?? 0
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BookTableViewCell
-		cell.book = self.books[indexPath.row]
+		cell.book = isSearchActive ? self.filteredBooks?[indexPath.row] : self.books?[indexPath.row]
+		
 		return cell
 	}
 }
 
-// MARK: - UISearchBar Delegate
+// MARK: - UISearchController Delegate
+extension BooksTableViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		fetch()
+		filteredBooks = [Book]()
+	}
+	
+	func didDismissSearchController(_ searchController: UISearchController) {
+		fetch()
+		filteredBooks = nil
+	}
+}
+
+// MARK: - UISearchResultsUpdating
 extension BooksTableViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
-		filterBooks(withPredicate: searchController.searchBar.text ?? "")
+		guard let text = searchController.searchBar.text, text != "" else {
+			return
+		}
+		
+		if vkWorker?.authorizationState == .authorized {
+			filterBooks(withPredicate: text)
+		} else if vkWorker?.authorizationState != .initialized {
+			showUnathorizedAlert()
+		}
 	}
 }
