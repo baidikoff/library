@@ -87,11 +87,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/DZNEmptyDataSet/DZNEmptyDataSet.framework"
   install_framework "$BUILT_PRODUCTS_DIR/FileKit/FileKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyUserDefaults/SwiftyUserDefaults.framework"
   install_framework "$BUILT_PRODUCTS_DIR/VK-ios-sdk/VK_ios_sdk.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/DZNEmptyDataSet/DZNEmptyDataSet.framework"
   install_framework "$BUILT_PRODUCTS_DIR/FileKit/FileKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyUserDefaults/SwiftyUserDefaults.framework"
   install_framework "$BUILT_PRODUCTS_DIR/VK-ios-sdk/VK_ios_sdk.framework"
 fi

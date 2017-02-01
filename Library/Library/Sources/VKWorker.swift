@@ -81,6 +81,14 @@ class VKWorker : NSObject {
 	open func unauthorize() {
 		VKSdk.forceLogout()
 	}
+	
+	open func needsAuthorization() -> Bool {
+		guard let state = state else {
+			return false
+		}
+		
+		return state == .initialized
+	}
 }
 
 // MARK: - VKSdk Delegate

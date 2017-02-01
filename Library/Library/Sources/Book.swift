@@ -11,15 +11,21 @@ import FileKit
 
 class Book {
 	open let name: String
-	open let path: Path
-	open var isDownloaded = false
+	
+	open var path: Path?
+	open var url: URL?
+	
+	open var isDownloaded: Bool
 	
 	init(name: String, path: Path) {
 		self.name = name
 		self.path = path
+		self.isDownloaded = true
 	}
 	
-	open func download() {
-		isDownloaded = true
+	init(name: String, url: URL) {
+		self.name = name
+		self.url = url
+		self.isDownloaded = false
 	}
 }

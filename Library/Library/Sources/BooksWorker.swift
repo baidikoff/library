@@ -36,7 +36,6 @@ class BooksWorker {
 			guard let bookName = bookPath.components.last?.rawValue.characters.split(separator: ".").map(String.init).first else { continue }
 			
 			let book = Book(name: bookName, path: bookPath)
-			book.isDownloaded = true
 			books.append(book)
 		}
 		
@@ -45,7 +44,7 @@ class BooksWorker {
 	
 	open func search(withPredicate predicate: String, offset: Int, count: Int, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
 		queue.async {
-			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset, VK_API_COUNT: 100])
+			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset, VK_API_COUNT: count])
 			self.activeRequest?.execute(resultBlock: { responce in
 				var books = Array<Book>()
 				let json = JSON(responce?.json as! Dictionary<String, Any>)
@@ -69,10 +68,10 @@ class BooksWorker {
 					
 					if type == 1 && ext == pdf {
 						let name = dictionary[nameKey]?.string
-						let path = Path(dictionary[urlKey]?.string ?? "")
+						let url = URL(string: dictionary[urlKey]?.string ?? "")
 						
-						if let name = name {
-							books.append(Book(name: name, path: path))
+						if let name = name, let url = url {
+							books.append(Book(name: name, url: url))
 						}
 					}
 				}

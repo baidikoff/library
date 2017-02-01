@@ -7,5 +7,6 @@ target 'Library' do
 	pod 'DZNEmptyDataSet'
 	pod 'FileKit', '~> 4.0.0'
 	pod 'SwiftyJSON'
+	pod 'SwiftyUserDefaults'
 
 end

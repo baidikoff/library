@@ -8,6 +8,7 @@
 
 import UIKit
 import VK_ios_sdk
+import DZNEmptyDataSet
 
 let cellIdentifier = "bookCell"
 let toBookSegueIdentifier = "toBook"
@@ -18,11 +19,11 @@ class BooksTableViewController: UITableViewController {
 	fileprivate var worker = BooksWorker()
 		
 	fileprivate var offset = 0
-	fileprivate let count = 50
+	fileprivate let count = 100
 	
-	fileprivate var books: Array<Book>? {
+	fileprivate var books: Array<Book>? = [Book]() {
 		didSet {
-			reload()
+			tableView.reloadData()
 		}
 	}
 	
@@ -35,7 +36,7 @@ class BooksTableViewController: UITableViewController {
 	fileprivate var filteredBooks: Array<Book>? {
 		didSet {
 			isSearchActive = filteredBooks != nil
-			reload()
+			tableView.reloadData()
 		}
 	}
 	
@@ -52,12 +53,14 @@ class BooksTableViewController: UITableViewController {
 	
 	// MARK: VC Lifecycle
 	override func viewDidLoad() {
-		books = [Book]()
 		vkWorker = VKWorker(delegate: self)
 		
 		searchController.delegate = self
 		searchController.searchResultsUpdater = self
 		tableView.tableHeaderView = searchController.searchBar
+		
+		tableView.emptyDataSetSource = self
+		tableView.emptyDataSetDelegate = self
 		
 		fetch()
 	}
@@ -78,42 +81,6 @@ class BooksTableViewController: UITableViewController {
 		worker.search(withPredicate: predicate, offset: offset, count: count) { self.filteredBooks = $0 }
 	}
 	
-	fileprivate func reload() {
-		tableView.reloadData()
-		if let state = vkWorker?.authorizationState, state != .authorized {
-			showUnathorizedAlert()
-		} else {
-			if !isSearchActive && books?.count == 0 {
-				showEmptyTableView()
-			} else {
-				tableView.clearBackground()
-			}
-		}
-	}
-	
-	// MARK: Empty tableView
-	fileprivate func showEmptyTableView() {
-		let message = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: view.bounds.height))
-		message.text = "It's time to search for some books"
-		message.textColor = .black
-		message.textAlignment = .center
-		message.backgroundColor = .white
-		
-		tableView.setBackground(view: message)
-	}
-	
-	fileprivate func showUnathorizedAlert() {
-		let alert = UIAlertController(title: "Authorization", message: "You need to be authorized to VK to search for the documents", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		alert.addAction(UIAlertAction(title: "Login", style: .default, handler: {
-			if $0.style == .default {
-				self.vkWorker?.authorize()
-			}
-		}))
-		
-		present(alert, animated: true, completion: nil)
-	}
-	
 	// MARK: Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let identifier = segue.identifier {
@@ -127,9 +94,11 @@ class BooksTableViewController: UITableViewController {
 // MARK: - VKWorker Delegate
 extension BooksTableViewController: VKWorkerDelegate {
 	func vkWorker(_ worker: VKWorker, didWokeUpSessionWithState state: VKAuthorizationState) -> Void {
+		tableView.reloadEmptyDataSet()
 	}
 	
 	func vkWorker(_ worker: VKWorker, didFinishAuthorizationWithResult result: VKAuthorizationResult) -> Void {
+		tableView.reloadEmptyDataSet()
 	}
 }
 
@@ -158,14 +127,60 @@ extension BooksTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return isSearchActive ? filteredBooks?.count ?? 0 : books?.count ?? 0
+		let count = isSearchActive ? filteredBooks?.count ?? 0 : books?.count ?? 0
+		tableView.separatorStyle = count == 0 ? .none : .singleLine
+		return count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BookTableViewCell
 		cell.book = isSearchActive ? self.filteredBooks?[indexPath.row] : self.books?[indexPath.row]
-		
 		return cell
+	}
+}
+
+// MARK: - DZNEmptyDataSetSource
+extension BooksTableViewController: DZNEmptyDataSetSource {
+	func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+		let attributes = [NSFontAttributeName : UIFont.emptyTitleFont]
+		var title = NSAttributedString(string: "")
+		
+		if let worker = vkWorker {
+			if worker.needsAuthorization() {
+				title = NSAttributedString(string: "Needs to authorize", attributes: attributes)
+			} else {
+				title = NSAttributedString(string: "It's time to search for books", attributes: attributes)
+			}
+		}
+		
+		return title
+	}
+	
+	func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {		
+		if let worker = vkWorker, worker.needsAuthorization() {
+			return NSAttributedString(string: "You need to authorize to VK to search for the books", attributes: [NSFontAttributeName : UIFont.emptyDescriptionFont])
+		}
+		
+		return NSAttributedString(string: "")
+	}
+	
+	func buttonImage(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> UIImage! {
+		if let worker = vkWorker, worker.needsAuthorization() {
+			return state == .highlighted ? #imageLiteral(resourceName: "pressedLoginButton") : #imageLiteral(resourceName: "loginViewButton")
+		} else {
+			return nil
+		}
+	}
+	
+	func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+		return (tableView.tableHeaderView?.bounds.height ?? 0.0) * -1.0
+	}
+}
+
+// MARK: - DZNEmptyDataSetDelegate
+extension BooksTableViewController: DZNEmptyDataSetDelegate {
+	func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+		vkWorker?.authorize()
 	}
 }
 
@@ -189,10 +204,10 @@ extension BooksTableViewController: UISearchResultsUpdating {
 			return
 		}
 		
-		if vkWorker?.authorizationState == .authorized {
+		if let worker = vkWorker, !worker.needsAuthorization() {
 			filterBooks(withPredicate: text)
-		} else if vkWorker?.authorizationState != .initialized {
-			showUnathorizedAlert()
+		} else {
+			tableView.reloadEmptyDataSet()
 		}
 	}
 }

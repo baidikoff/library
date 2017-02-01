@@ -23,6 +23,7 @@
 		A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890B1E09DC4700327CD6 /* Main.storyboard */; };
 		A8B8890F1E09DC4700327CD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890E1E09DC4700327CD6 /* Assets.xcassets */; };
 		A8B889121E09DC4700327CD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */; };
+		A8EA8CE71E3FEA21003E00B2 /* BooksDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA8CE61E3FEA21003E00B2 /* BooksDownloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A8B8890E1E09DC4700327CD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8B889111E09DC4700327CD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8B889131E09DC4700327CD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8EA8CE61E3FEA21003E00B2 /* BooksDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksDownloader.swift; sourceTree = "<group>"; };
 		AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Library.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Library/Pods-Library.debug.xcconfig"; sourceTree = "<group>"; };
 		B04764B3732F807C2DFDBF67 /* Pods_Library.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08D78402497EEBF54F3AE83 /* Pods-Library.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Library.release.xcconfig"; path = "Pods/Target Support Files/Pods-Library/Pods-Library.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				A8115FD21E11978F00223DEE /* Book.swift */,
 				A8115FD41E119A0000223DEE /* BooksWorker.swift */,
+				A8EA8CE61E3FEA21003E00B2 /* BooksDownloader.swift */,
 			);
 			name = "Books Model";
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8EA8CE71E3FEA21003E00B2 /* BooksDownloader.swift in Sources */,
 				A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */,
 				A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */,
 				A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */,
