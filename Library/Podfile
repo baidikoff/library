@@ -8,5 +8,6 @@ target 'Library' do
 	pod 'FileKit', '~> 4.0.0'
 	pod 'SwiftyJSON'
 	pod 'SwiftyUserDefaults'
+	pod 'SDWebImage', '~>3.8'
 
 end

@@ -44,7 +44,7 @@ class BooksWorker {
 	
 	open func search(withPredicate predicate: String, offset: Int, count: Int, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
 		queue.async {
-			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset, VK_API_COUNT: count])
+			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset])
 			self.activeRequest?.execute(resultBlock: { responce in
 				var books = Array<Book>()
 				let json = JSON(responce?.json as! Dictionary<String, Any>)

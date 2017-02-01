@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04764B3732F807C2DFDBF67 /* Pods_Library.framework */; };
+		A802FAE11E42324F00CA335A /* UserDefaults+Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802FAE01E42324F00CA335A /* UserDefaults+Library.swift */; };
+		A802FAE31E42327400CA335A /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A802FAE21E42327400CA335A /* DZNEmptyDataSet.framework */; };
+		A802FAE51E42327800CA335A /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A802FAE41E42327800CA335A /* FileKit.framework */; };
+		A802FAE71E42327C00CA335A /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A802FAE61E42327C00CA335A /* SwiftyUserDefaults.framework */; };
 		A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */; };
 		A8115FD31E11978F00223DEE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD21E11978F00223DEE /* Book.swift */; };
 		A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD41E119A0000223DEE /* BooksWorker.swift */; };
@@ -23,10 +27,15 @@
 		A8B8890D1E09DC4700327CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890B1E09DC4700327CD6 /* Main.storyboard */; };
 		A8B8890F1E09DC4700327CD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8B8890E1E09DC4700327CD6 /* Assets.xcassets */; };
 		A8B889121E09DC4700327CD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B889101E09DC4700327CD6 /* LaunchScreen.storyboard */; };
+		A8E8A8821E427F9C00382138 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E8A8811E427F9C00382138 /* SDWebImage.framework */; };
 		A8EA8CE71E3FEA21003E00B2 /* BooksDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA8CE61E3FEA21003E00B2 /* BooksDownloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A802FAE01E42324F00CA335A /* UserDefaults+Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Library.swift"; sourceTree = "<group>"; };
+		A802FAE21E42327400CA335A /* DZNEmptyDataSet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DZNEmptyDataSet.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/DZNEmptyDataSet/DZNEmptyDataSet.framework"; sourceTree = "<group>"; };
+		A802FAE41E42327800CA335A /* FileKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/FileKit/FileKit.framework"; sourceTree = "<group>"; };
+		A802FAE61E42327C00CA335A /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyUserDefaults.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/SwiftyUserDefaults/SwiftyUserDefaults.framework"; sourceTree = "<group>"; };
 		A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 		A8115FD21E11978F00223DEE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		A8115FD41E119A0000223DEE /* BooksWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksWorker.swift; sourceTree = "<group>"; };
@@ -45,6 +54,7 @@
 		A8B8890E1E09DC4700327CD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8B889111E09DC4700327CD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8B889131E09DC4700327CD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8E8A8811E427F9C00382138 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "Pods/../build/Debug-iphoneos/SDWebImage/SDWebImage.framework"; sourceTree = "<group>"; };
 		A8EA8CE61E3FEA21003E00B2 /* BooksDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksDownloader.swift; sourceTree = "<group>"; };
 		AEBD5D1B92006B0D2C69563D /* Pods-Library.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Library.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Library/Pods-Library.debug.xcconfig"; sourceTree = "<group>"; };
 		B04764B3732F807C2DFDBF67 /* Pods_Library.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8E8A8821E427F9C00382138 /* SDWebImage.framework in Frameworks */,
+				A802FAE71E42327C00CA335A /* SwiftyUserDefaults.framework in Frameworks */,
+				A802FAE51E42327800CA335A /* FileKit.framework in Frameworks */,
+				A802FAE31E42327400CA335A /* DZNEmptyDataSet.framework in Frameworks */,
 				A8A5F4C81E1974E200A55291 /* SwiftyJSON.framework in Frameworks */,
 				A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */,
 				100A8963CCCFB0B3EC7491DD /* Pods_Library.framework in Frameworks */,
@@ -68,6 +82,10 @@
 		5423722DE13811D194925E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8E8A8811E427F9C00382138 /* SDWebImage.framework */,
+				A802FAE61E42327C00CA335A /* SwiftyUserDefaults.framework */,
+				A802FAE41E42327800CA335A /* FileKit.framework */,
+				A802FAE21E42327400CA335A /* DZNEmptyDataSet.framework */,
 				A8A5F4C71E1974E200A55291 /* SwiftyJSON.framework */,
 				A8A5F4C51E1974DC00A55291 /* Alamofire.framework */,
 				A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */,
@@ -132,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */,
+				A802FAE01E42324F00CA335A /* UserDefaults+Library.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -333,6 +352,7 @@
 				A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */,
 				A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */,
 				A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */,
+				A802FAE11E42324F00CA335A /* UserDefaults+Library.swift in Sources */,
 				A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */,
 				A8115FD31E11978F00223DEE /* Book.swift in Sources */,
 				A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */,
@@ -469,7 +489,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 76LJ97E96C;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SDWebImage",
+				);
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -489,7 +513,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = appIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 76LJ97E96C;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SDWebImage",
+				);
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -12,6 +12,7 @@ import DZNEmptyDataSet
 
 let cellIdentifier = "bookCell"
 let toBookSegueIdentifier = "toBook"
+let toAccountSegueIdentifier = "toAccount"
 
 class BooksTableViewController: UITableViewController {
 	// MARK: Properties
@@ -27,16 +28,16 @@ class BooksTableViewController: UITableViewController {
 		}
 	}
 	
-	fileprivate var vkWorker: VKWorker? {
-		didSet {
-			vkWorker?.register(UIDelegate: self)
-		}
-	}
-	
 	fileprivate var filteredBooks: Array<Book>? {
 		didSet {
 			isSearchActive = filteredBooks != nil
 			tableView.reloadData()
+		}
+	}
+	
+	fileprivate var vkWorker: VKWorker? {
+		didSet {
+			vkWorker?.register(UIDelegate: self)
 		}
 	}
 	
@@ -53,6 +54,7 @@ class BooksTableViewController: UITableViewController {
 	
 	// MARK: VC Lifecycle
 	override func viewDidLoad() {
+		super.viewDidLoad()
 		vkWorker = VKWorker(delegate: self)
 		
 		searchController.delegate = self
@@ -63,6 +65,11 @@ class BooksTableViewController: UITableViewController {
 		tableView.emptyDataSetDelegate = self
 		
 		fetch()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.reloadData()
 	}
 	
 	// MARK: Books
@@ -83,10 +90,17 @@ class BooksTableViewController: UITableViewController {
 	
 	// MARK: Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let identifier = segue.identifier {
-			if identifier == toBookSegueIdentifier {
+		searchController.dismiss(animated: true, completion: nil)
+		
+		guard let identifier = segue.identifier else {
+			return
+		}
+		
+		if identifier == toAccountSegueIdentifier {
+			let destinationVC = segue.destination as! AccountViewController
+			destinationVC.worker = vkWorker
+		} else if identifier == toBookSegueIdentifier {
 			
-			}
 		}
 	}
 }
@@ -118,14 +132,6 @@ extension BooksTableViewController {
 
 // MARK: - UITableViewController Data Source
 extension BooksTableViewController {
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 70.0
-	}
-	
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
-	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let count = isSearchActive ? filteredBooks?.count ?? 0 : books?.count ?? 0
 		tableView.separatorStyle = count == 0 ? .none : .singleLine
@@ -187,13 +193,16 @@ extension BooksTableViewController: DZNEmptyDataSetDelegate {
 // MARK: - UISearchController Delegate
 extension BooksTableViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
-		fetch()
 		filteredBooks = [Book]()
 	}
 	
-	func didDismissSearchController(_ searchController: UISearchController) {
+	func willDismissSearchController(_ searchController: UISearchController) {
 		fetch()
 		filteredBooks = nil
+	}
+	
+	func didDismissSearchController(_ searchController: UISearchController) {
+		tableView.reloadEmptyDataSet()
 	}
 }
 
