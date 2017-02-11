@@ -33,7 +33,7 @@ class BooksWorker {
 		}
 		
 		for bookPath in booksDirectory {
-			guard let bookName = bookPath.components.last?.rawValue.characters.split(separator: ".").map(String.init).first else { continue }
+			guard let bookName = bookPath.components.last?.rawValue.characters.split(separator: ".").map(String.init).dropLast().joined() else { continue }
 			
 			let book = Book(name: bookName, path: bookPath)
 			books.append(book)
@@ -42,9 +42,9 @@ class BooksWorker {
 		return books
 	}
 	
-	open func search(withPredicate predicate: String, offset: Int, count: Int, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
+	open func search(withPredicate predicate: String, completionHandler: @escaping (_ books: Array<Book>) -> Void) {
 		queue.async {
-			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: offset])
+			self.activeRequest = VKRequest(method: searchMethod, parameters: [VK_API_Q: predicate, VK_API_OFFSET: 0])
 			self.activeRequest?.execute(resultBlock: { responce in
 				var books = Array<Book>()
 				let json = JSON(responce?.json as! Dictionary<String, Any>)
@@ -83,5 +83,15 @@ class BooksWorker {
 	
 	open func cancelActiveRequest() {
 		activeRequest?.cancel()
+	}
+	
+	open func remove(book: Book) -> Bool {
+		do {
+			try book.path?.deleteFile()
+			return true
+		} catch let error {
+			print(error.localizedDescription)
+			return false
+		}
 	}
 }

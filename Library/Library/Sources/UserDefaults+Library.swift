@@ -21,7 +21,6 @@ extension UserDefaults {
 	}
 }
 
-
 extension DefaultsKeys {
 	open static let user = DefaultsKey<String?>("user")
 	open static let photoURL = DefaultsKey<String?>("photoURL")

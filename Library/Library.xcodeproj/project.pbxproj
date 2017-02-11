@@ -15,12 +15,13 @@
 		A8115FD11E0EA6AA00223DEE /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */; };
 		A8115FD31E11978F00223DEE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD21E11978F00223DEE /* Book.swift */; };
 		A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD41E119A0000223DEE /* BooksWorker.swift */; };
-		A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD61E119A3700223DEE /* SingleBookViewController.swift */; };
 		A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8115FD81E119A4D00223DEE /* AccountViewController.swift */; };
 		A85E0E561E0AB65000954BA1 /* UIKit+LibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */; };
 		A85E0E611E0B328900954BA1 /* VKWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E601E0B328900954BA1 /* VKWorker.swift */; };
 		A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */; };
 		A85E0E651E0B379200954BA1 /* VK_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */; };
+		A87323C91E4DD8A70008389C /* UXMPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A87323C71E4DD8A70008389C /* UXMPDFKit.framework */; };
+		A87323CB1E4F100A0008389C /* MBCircularProgressBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A87323CA1E4F100A0008389C /* MBCircularProgressBar.framework */; };
 		A889DA691E15DC5600A3BACA /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */; };
 		A8A5F4C81E1974E200A55291 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A5F4C71E1974E200A55291 /* SwiftyJSON.framework */; };
 		A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B889071E09DC4700327CD6 /* AppDelegate.swift */; };
@@ -39,12 +40,14 @@
 		A8115FD01E0EA6AA00223DEE /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 		A8115FD21E11978F00223DEE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		A8115FD41E119A0000223DEE /* BooksWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksWorker.swift; sourceTree = "<group>"; };
-		A8115FD61E119A3700223DEE /* SingleBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleBookViewController.swift; sourceTree = "<group>"; };
 		A8115FD81E119A4D00223DEE /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		A85E0E551E0AB65000954BA1 /* UIKit+LibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+LibraryExtensions.swift"; sourceTree = "<group>"; };
 		A85E0E601E0B328900954BA1 /* VKWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorker.swift; sourceTree = "<group>"; };
 		A85E0E621E0B352300954BA1 /* VKWorkerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKWorkerDelegate.swift; sourceTree = "<group>"; };
 		A85E0E641E0B379200954BA1 /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/VK-ios-sdk/VK_ios_sdk.framework"; sourceTree = "<group>"; };
+		A87323C61E4DD8A70008389C /* FFCircularProgressView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FFCircularProgressView.framework; path = "Pods/../build/Debug-iphoneos/FFCircularProgressView/FFCircularProgressView.framework"; sourceTree = "<group>"; };
+		A87323C71E4DD8A70008389C /* UXMPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UXMPDFKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/UXMPDFKit/UXMPDFKit.framework"; sourceTree = "<group>"; };
+		A87323CA1E4F100A0008389C /* MBCircularProgressBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBCircularProgressBar.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphonesimulator/MBCircularProgressBar/MBCircularProgressBar.framework"; sourceTree = "<group>"; };
 		A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		A8A5F4C51E1974DC00A55291 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
 		A8A5F4C71E1974E200A55291 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/Library-crwesczxucagxhbxiuvvdawjfgpd/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
@@ -66,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A87323CB1E4F100A0008389C /* MBCircularProgressBar.framework in Frameworks */,
+				A87323C91E4DD8A70008389C /* UXMPDFKit.framework in Frameworks */,
 				A8E8A8821E427F9C00382138 /* SDWebImage.framework in Frameworks */,
 				A802FAE71E42327C00CA335A /* SwiftyUserDefaults.framework in Frameworks */,
 				A802FAE51E42327800CA335A /* FileKit.framework in Frameworks */,
@@ -82,6 +87,9 @@
 		5423722DE13811D194925E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A87323CA1E4F100A0008389C /* MBCircularProgressBar.framework */,
+				A87323C61E4DD8A70008389C /* FFCircularProgressView.framework */,
+				A87323C71E4DD8A70008389C /* UXMPDFKit.framework */,
 				A8E8A8811E427F9C00382138 /* SDWebImage.framework */,
 				A802FAE61E42327C00CA335A /* SwiftyUserDefaults.framework */,
 				A802FAE41E42327800CA335A /* FileKit.framework */,
@@ -108,7 +116,6 @@
 			children = (
 				A8B889071E09DC4700327CD6 /* AppDelegate.swift */,
 				A85E0E581E0AB96400954BA1 /* Books View */,
-				A85E0E591E0AB97000954BA1 /* Single Book View */,
 				A85E0E5A1E0AB97B00954BA1 /* Account View */,
 				A85E0E531E0AB5A100954BA1 /* Books Model */,
 				A85E0E5F1E0B327A00954BA1 /* VK */,
@@ -162,14 +169,6 @@
 				A889DA681E15DC5500A3BACA /* BookTableViewCell.swift */,
 			);
 			name = "Books View";
-			sourceTree = "<group>";
-		};
-		A85E0E591E0AB97000954BA1 /* Single Book View */ = {
-			isa = PBXGroup;
-			children = (
-				A8115FD61E119A3700223DEE /* SingleBookViewController.swift */,
-			);
-			name = "Single Book View";
 			sourceTree = "<group>";
 		};
 		A85E0E5A1E0AB97B00954BA1 /* Account View */ = {
@@ -357,7 +356,6 @@
 				A8115FD31E11978F00223DEE /* Book.swift in Sources */,
 				A8115FD51E119A0000223DEE /* BooksWorker.swift in Sources */,
 				A8115FD91E119A4D00223DEE /* AccountViewController.swift in Sources */,
-				A8115FD71E119A3700223DEE /* SingleBookViewController.swift in Sources */,
 				A8B889081E09DC4700327CD6 /* AppDelegate.swift in Sources */,
 				A85E0E631E0B352300954BA1 /* VKWorkerDelegate.swift in Sources */,
 			);
@@ -493,6 +491,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SDWebImage",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FFCircularProgressView",
 				);
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -517,6 +516,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SDWebImage",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FFCircularProgressView",
 				);
 				INFOPLIST_FILE = Library/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

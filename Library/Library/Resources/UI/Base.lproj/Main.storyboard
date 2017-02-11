@@ -49,6 +49,47 @@
                                                 <action selector="download:" destination="CGe-3B-imx" eventType="touchUpInside" id="MXb-1v-Ota"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-LN-ZMX" customClass="MBCircularProgressBarView">
+                                            <rect key="frame" x="317" y="24" width="50" height="50"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="T2D-LN-ZMX" secondAttribute="height" multiplier="1:1" id="0gt-GE-9iQ"/>
+                                                <constraint firstAttribute="width" constant="50" id="3Qe-OO-NmQ"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                                    <real key="value" value="100"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="progressAngle">
+                                                    <real key="value" value="75"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="progressLineWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="unitString" value="%"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="unitFontSize">
+                                                    <real key="value" value="18"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="valueFontSize">
+                                                    <real key="value" value="18"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="valueDecimalFontSize">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="progressCapType">
+                                                    <integer key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                                    <color key="value" red="1" green="0.86666666670000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
+                                                    <color key="value" red="1" green="0.8666666666666667" blue="0.6705882352941176" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="r3X-6K-fpM" firstAttribute="centerY" secondItem="zuv-iS-KFJ" secondAttribute="centerY" id="0w0-BL-06E"/>
@@ -58,12 +99,16 @@
                                         <constraint firstItem="jAf-4g-EqG" firstAttribute="leading" secondItem="uFg-41-Th4" secondAttribute="trailing" constant="8" id="JOE-6P-51B"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="uFg-41-Th4" secondAttribute="leading" id="SU3-O6-13R"/>
                                         <constraint firstAttribute="topMargin" secondItem="uFg-41-Th4" secondAttribute="top" id="cJv-49-CwB"/>
+                                        <constraint firstItem="T2D-LN-ZMX" firstAttribute="centerY" secondItem="zuv-iS-KFJ" secondAttribute="centerY" id="cXF-mH-ngT"/>
                                         <constraint firstItem="r3X-6K-fpM" firstAttribute="leading" secondItem="jAf-4g-EqG" secondAttribute="trailing" constant="8" id="t5Z-cJ-vZB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="T2D-LN-ZMX" secondAttribute="trailing" id="yhL-Ej-94r"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="bookTitleLabel" destination="jAf-4g-EqG" id="EGr-bJ-GBC"/>
                                     <outlet property="downloadButton" destination="r3X-6K-fpM" id="MGt-ug-0PF"/>
+                                    <outlet property="progressView" destination="T2D-LN-ZMX" id="5sA-qX-e9M"/>
+                                    <outlet property="titleWidthConstraint" destination="t5Z-cJ-vZB" id="D6l-SE-t9Q"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -80,31 +125,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="Xr9-Jv-0Iu" kind="show" identifier="toBook" id="jCl-fV-a9U"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nX2-SO-mGT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1713" y="139"/>
-        </scene>
-        <!--Single Book View Controller-->
-        <scene sceneID="qhN-Sg-s4I">
-            <objects>
-                <viewController id="Xr9-Jv-0Iu" customClass="SingleBookViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3Ti-b6-oQm"/>
-                        <viewControllerLayoutGuide type="bottom" id="nDv-11-Te2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rKh-l7-wf1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aQd-Ud-10h" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2678" y="139"/>
         </scene>
         <!--Account View Controller-->
         <scene sceneID="mqV-Rr-Tp6">
@@ -161,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bte-x4-adY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2647.1999999999998" y="-570.76461769115451"/>
+            <point key="canvasLocation" x="2519" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JTO-cb-WJ7">

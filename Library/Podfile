@@ -9,5 +9,7 @@ target 'Library' do
 	pod 'SwiftyJSON'
 	pod 'SwiftyUserDefaults'
 	pod 'SDWebImage', '~>3.8'
+	pod 'UXMPDFKit'
+	pod 'MBCircularProgressBar'
 
 end

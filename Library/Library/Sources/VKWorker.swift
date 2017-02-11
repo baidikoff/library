@@ -12,11 +12,21 @@ import SwiftyUserDefaults
 
 private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier?.appending(String(describing: VKWorker.self)))!)
 
-class VKWorker : NSObject {
+class VKWorker: NSObject {
 	
 	open var authorizationState: VKAuthorizationState? {
 		get {
 			return state
+		}
+	}
+	
+	open var needsAuthorization: Bool {
+		get {
+			guard let state = state else {
+				return false
+			}
+			
+			return state == .initialized
 		}
 	}
 	
@@ -39,10 +49,28 @@ class VKWorker : NSObject {
 		
 		VKSdk.wakeUpSession(scope) { state, error in
 			self.state = state
+			self.sync()
 			if error == nil {
 				for delegate in self.delegates {
 					delegate?.vkWorker?(self, didWokeUpSessionWithState: state)
 				}
+			}
+		}
+	}
+	
+	fileprivate func sync() {
+		queue.async {
+			VKApi.users().get([VK_API_FIELDS : "first_name,last_name,photo_max_orig"]).execute(resultBlock: {responce in
+				if let user = (responce?.parsedModel as! VKUsersArray).firstObject() {
+					Defaults[.user] = "\(user.first_name ?? "") \(user.last_name ?? "")"
+					Defaults[.photoURL] = user.photo_max_orig
+					
+					if let url = URL(string: user.photo_max_orig) {
+						Defaults[.photo] = UIImage(url: url)
+					}
+				}
+			}) { error in
+				print(error?.localizedDescription ?? "")
 			}
 		}
 	}
@@ -70,21 +98,16 @@ class VKWorker : NSObject {
 	}
 	
 	open func unauthorize() {
-		Defaults.removeAll()
-		VKSdk.forceLogout()
-	}
-	
-	open func needsAuthorization() -> Bool {
-		guard let state = state else {
-			return false
-		}
+		Defaults.remove(.photoURL)
+		Defaults.remove(.photo)
+		Defaults.remove(.user)
 		
-		return state == .initialized
+		VKSdk.forceLogout()
 	}
 }
 
 // MARK: - VKSdk Delegate
-extension VKWorker : VKSdkDelegate {
+extension VKWorker: VKSdkDelegate {
 	public func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
 		self.state = result.state
 		self.delegates.enumerated().forEach {
@@ -94,20 +117,7 @@ extension VKWorker : VKSdkDelegate {
 	
 	func vkSdkAuthorizationStateUpdated(with result: VKAuthorizationResult!) {
 		self.state = result.state
-		queue.async {
-			VKApi.users().get([VK_API_FIELDS : "first_name,last_name,photo_max_orig"]).execute(resultBlock: {responce in
-				if let user = (responce?.parsedModel as! VKUsersArray).firstObject() {
-					Defaults[.user] = "\(user.first_name ?? "") \(user.last_name ?? "")"
-					Defaults[.photoURL] = user.photo_max_orig
-					
-					if let url = URL(string: user.photo_max_orig) {
-						Defaults[.photo] = UIImage(url: url)
-					}
-				}
-			}) { error in
-				print(error?.localizedDescription ?? "")
-			}
-		}
+		sync()
 	}
 	
 	func vkSdkAccessTokenUpdated(_ newToken: VKAccessToken!, oldToken: VKAccessToken!) {
@@ -130,7 +140,7 @@ extension VKWorker : VKSdkDelegate {
 }
 
 // MARK: - VKSdk UI Delegate
-extension VKWorker : VKSdkUIDelegate {
+extension VKWorker: VKSdkUIDelegate {
 	func vkSdkNeedCaptchaEnter(_ captchaError: VKError!) {
 		self.UIDelegate?.vkWorker?(self, needsCaptchaEnterWithError: captchaError)
 	}
