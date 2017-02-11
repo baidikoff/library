@@ -124,7 +124,7 @@ extension BooksTableViewController {
 				let document = try PDFDocument(filePath: book.path?.rawValue ?? "")
 				let controller = PDFViewController(document: document)
 				navigationController?.pushViewController(controller, animated: true)
-				navigationController?.navigationBar.backgroundColor = .navigationBarColor
+				searchController.dismiss(animated: true, completion: nil)
 			} catch let error {
 				let alert = UIAlertController(error: error)
 				present(alert, animated: true, completion: nil)
