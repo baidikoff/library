@@ -75,9 +75,7 @@ class BooksWorker {
 						}
 					}
 				}
-			}) { error in
-				print(error?.localizedDescription ?? "hello")
-			}
+			}, errorBlock: nil)
 		}
 	}
 	
@@ -85,13 +83,12 @@ class BooksWorker {
 		activeRequest?.cancel()
 	}
 	
-	open func remove(book: Book) -> Bool {
+	open func remove(book: Book) -> Error? {
 		do {
 			try book.path?.deleteFile()
-			return true
+			return nil
 		} catch let error {
-			print(error.localizedDescription)
-			return false
+			return error
 		}
 	}
 }

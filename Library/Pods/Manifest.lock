@@ -2,9 +2,6 @@ PODS:
   - DZNEmptyDataSet (1.8.1)
   - FileKit (4.0.0)
   - MBCircularProgressBar (0.3.5)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
   - SwiftyJSON (3.1.3)
   - SwiftyUserDefaults (3.0.0)
   - UXMPDFKit (0.5.3)
@@ -14,7 +11,6 @@ DEPENDENCIES:
   - DZNEmptyDataSet
   - FileKit (~> 4.0.0)
   - MBCircularProgressBar
-  - SDWebImage (~> 3.8)
   - SwiftyJSON
   - SwiftyUserDefaults
   - UXMPDFKit
@@ -24,12 +20,11 @@ SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FileKit: 2589d0393b3bfdc599c2ba6e41419be6db4279e0
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
   UXMPDFKit: 07c7ba1c6c13ef09bfa3119e3f1de364ba6b511b
   VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
 
-PODFILE CHECKSUM: 777ab7978312924fca829e6668229a9e3e2d2e75
+PODFILE CHECKSUM: 6f1c0b99b6d7d09c687646b936cb094f61d0ce16
 
 COCOAPODS: 1.1.1

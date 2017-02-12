@@ -12,11 +12,9 @@ import UXMPDFKit
 import DZNEmptyDataSet
 
 let cellIdentifier = "bookCell"
-let toBookSegueIdentifier = "toBook"
 let toAccountSegueIdentifier = "toAccount"
 
 class BooksTableViewController: UITableViewController {
-	// MARK: Properties
 	fileprivate var isSearchActive = false
 	fileprivate var booksWorker = BooksWorker()
 	fileprivate var selectedRow = 0
@@ -54,6 +52,9 @@ class BooksTableViewController: UITableViewController {
 	// MARK: VC Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.navigationBar.backgroundColor = .navigationBarColor
+		
 		vkWorker = VKWorker(delegate: self)
 		
 		searchController.delegate = self
@@ -113,6 +114,13 @@ extension BooksTableViewController: VKWorkerUIDelegate {
 	func vkWorker(_ worker: VKWorker, shouldPresentViewController viewController: UIViewController) {
 		present(viewController, animated: true, completion: nil)
 	}
+	
+	func vkWorker(_ worker: VKWorker, needsCaptchaEnterWithError error: VKError) {
+		let captchaVC = VKCaptchaViewController.captchaControllerWithError(error)
+		if let captchaVC = captchaVC {
+			present(captchaVC, animated: true, completion: nil)
+		}
+	}
 }
 
 // MARK: - UITableViewController Delegate
@@ -134,13 +142,17 @@ extension BooksTableViewController {
 	
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete, let book = books?[indexPath.row] {
-			if booksWorker.remove(book: book) {
+			let result = booksWorker.remove(book: book)
+			if result == nil {
 				tableView.beginUpdates()
 
 				books?.remove(at: indexPath.row)
 				tableView.deleteRows(at: [indexPath], with: .left)
 				
 				tableView.endUpdates()
+			} else {
+				let alert = UIAlertController(error: result!)
+				present(alert, animated: true, completion: nil)
 			}
 		}
 	}
@@ -160,7 +172,10 @@ extension BooksTableViewController {
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BookTableViewCell
+		
+		cell.delegate = self
 		cell.book = isSearchActive ? self.filteredBooks?[indexPath.row] : self.books?[indexPath.row]
+		
 		return cell
 	}
 }
@@ -173,7 +188,7 @@ extension BooksTableViewController: DZNEmptyDataSetSource {
 		
 		if let worker = vkWorker {
 			if worker.needsAuthorization {
-				title = NSAttributedString(string: "Needs to authorize", attributes: attributes)
+				title = NSAttributedString(string: "Needs authorization", attributes: attributes)
 			} else {
 				title = NSAttributedString(string: "It's time to search for books", attributes: attributes)
 			}
@@ -193,7 +208,7 @@ extension BooksTableViewController: DZNEmptyDataSetSource {
 	
 	func buttonImage(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> UIImage! {
 		if let worker = vkWorker, worker.needsAuthorization {
-			return state == .highlighted ? #imageLiteral(resourceName: "pressedLoginButton") : #imageLiteral(resourceName: "loginViewButton")
+			return state == .highlighted ? #imageLiteral(resourceName: "pressedLoginButton") : #imageLiteral(resourceName: "loginButton")
 		} else {
 			return nil
 		}
@@ -239,5 +254,13 @@ extension BooksTableViewController: UISearchResultsUpdating {
 		} else {
 			tableView.reloadEmptyDataSet()
 		}
+	}
+}
+
+// MARK: - BookTableViewCellErrorDelegate
+extension BooksTableViewController: BookTableViewCellErrorDelegate {
+	func bookTableViewCell(cell: BookTableViewCell, didReceiveError error: Error) {
+		let alert = UIAlertController(error: error)
+		present(alert, animated: true, completion: nil)
 	}
 }

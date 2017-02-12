@@ -12,10 +12,10 @@ import FileKit
 protocol BooksDownloaderDelegate {
 	func booksDownloader(downloader: BooksDownloader, didUpdatedProgress progress: Double) -> Void
 	func booksDownloader(downloader: BooksDownloader, didFinishDownloadBook book: Book) -> Void
+	func booksDownloader(downloader: BooksDownloader, didCompleteWithError error: Error) -> Void
 }
 
 class BooksDownloader: NSObject {
-	// MARK: - Properties
 	open var delegate: BooksDownloaderDelegate?
 	open var progress: Double = 0.0 {
 		didSet {
@@ -75,12 +75,14 @@ extension BooksDownloader: URLSessionDownloadDelegate {
 				
 				delegate?.booksDownloader(downloader: self, didFinishDownloadBook: book)
 			} catch let error {
-				print(error.localizedDescription)
+				delegate?.booksDownloader(downloader: self, didCompleteWithError: error)
 			}
 		}
 	}
 	
 	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-		
+		if let error = error {
+			delegate?.booksDownloader(downloader: self, didCompleteWithError: error)
+		}
 	}
 }

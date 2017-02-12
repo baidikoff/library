@@ -1,14 +1,13 @@
 platform :ios, '9.0'
 use_frameworks!
 
-target 'Library' do
+target 'VKLibrary' do
 
 	pod 'VK-ios-sdk'
 	pod 'DZNEmptyDataSet'
 	pod 'FileKit', '~> 4.0.0'
 	pod 'SwiftyJSON'
 	pod 'SwiftyUserDefaults'
-	pod 'SDWebImage', '~>3.8'
 	pod 'UXMPDFKit'
 	pod 'MBCircularProgressBar'
 

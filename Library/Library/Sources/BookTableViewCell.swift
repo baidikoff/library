@@ -9,8 +9,11 @@
 import UIKit
 import MBCircularProgressBar
 
+protocol BookTableViewCellErrorDelegate {
+	func bookTableViewCell(cell: BookTableViewCell, didReceiveError error: Error) -> Void
+}
+
 class BookTableViewCell: UITableViewCell {
-	
 	@IBOutlet weak var titleWidthConstraint: NSLayoutConstraint!
 	@IBOutlet weak var bookTitleLabel: UILabel!
 	@IBOutlet weak var downloadButton: UIButton!
@@ -31,6 +34,8 @@ class BookTableViewCell: UITableViewCell {
 			}
 		}
 	}
+	
+	open var delegate: BookTableViewCellErrorDelegate?
 	
 	open var book : Book? {
 		didSet {
@@ -53,6 +58,7 @@ class BookTableViewCell: UITableViewCell {
 	}
 }
 
+// MARK: - BooksDownloaderDelegate
 extension BookTableViewCell: BooksDownloaderDelegate {
 	func booksDownloader(downloader: BooksDownloader, didUpdatedProgress progress: Double) {
 		self.progress = progress
@@ -62,5 +68,9 @@ extension BookTableViewCell: BooksDownloaderDelegate {
 		accessoryType = .disclosureIndicator
 		progressView.isHidden = true
 		titleWidthConstraint.constant = -50.0
+	}
+	
+	func booksDownloader(downloader: BooksDownloader, didCompleteWithError error: Error) {
+		delegate?.bookTableViewCell(cell: self, didReceiveError: error)
 	}
 }

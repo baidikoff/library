@@ -10,16 +10,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Library-->
+        <!--VKLibrary-->
         <scene sceneID="9CI-d6-h5p">
             <objects>
-                <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="VKLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="9EA-iv-XYL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="Library" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="VKLibrary" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGe-3B-imx" id="zuv-iS-KFJ">
@@ -33,16 +33,16 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAf-4g-EqG">
-                                            <rect key="frame" x="100" y="40" width="209" height="21"/>
+                                            <rect key="frame" x="100" y="40" width="219" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3X-6K-fpM">
-                                            <rect key="frame" x="317" y="24" width="50" height="50"/>
+                                            <rect key="frame" x="327" y="29" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="r3X-6K-fpM" secondAttribute="height" multiplier="1:1" id="2Gc-af-nRM"/>
-                                                <constraint firstAttribute="width" constant="50" id="WDT-Y8-9N5"/>
+                                                <constraint firstAttribute="width" constant="40" id="WDT-Y8-9N5"/>
                                             </constraints>
                                             <state key="normal" title="Button" image="downloadButton"/>
                                             <connections>
@@ -83,10 +83,10 @@
                                                     <integer key="value" value="1"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                                    <color key="value" red="1" green="0.86666666670000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="value" red="0.98039215690000003" green="0.84313725490000002" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
-                                                    <color key="value" red="1" green="0.8666666666666667" blue="0.6705882352941176" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="value" red="0.98039215690000003" green="0.84313725490000002" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="emptyLineWidth">
                                                     <real key="value" value="1"/>
@@ -123,7 +123,7 @@
                             <outlet property="delegate" destination="xvz-gi-Gyz" id="7Fn-6W-Uhy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Library" id="Jxt-Zk-r5e">
+                    <navigationItem key="navigationItem" title="VKLibrary" id="Jxt-Zk-r5e">
                         <barButtonItem key="leftBarButtonItem" image="accountIcon" style="done" id="iEm-F3-UWD">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
@@ -139,7 +139,7 @@
         <!--Account View Controller-->
         <scene sceneID="mqV-Rr-Tp6">
             <objects>
-                <viewController id="V9p-2l-oER" customClass="AccountViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="V9p-2l-oER" customClass="AccountViewController" customModule="VKLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="brW-Lc-U58"/>
                         <viewControllerLayoutGuide type="bottom" id="lpw-FP-jkb"/>
@@ -149,14 +149,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-pM-6R3">
-                                <rect key="frame" x="87.5" y="233.5" width="200" height="200"/>
+                                <rect key="frame" x="87" y="233" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1j1-pM-6R3" secondAttribute="height" multiplier="1:1" id="RgG-LX-2U6"/>
                                     <constraint firstAttribute="width" constant="200" id="aGt-91-Vnt"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NsG-rL-eAT">
-                                <rect key="frame" x="16" y="441.5" width="343" height="40"/>
+                                <rect key="frame" x="16" y="441" width="343" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qP3-83-Qej"/>
                                 </constraints>
@@ -164,15 +164,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2z-PV-JCn">
-                                <rect key="frame" x="16" y="617" width="343" height="30"/>
-                                <state key="normal" title="Logout"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2z-PV-JCn">
+                                <rect key="frame" x="16" y="597" width="343" height="50"/>
+                                <state key="normal" image="logoutButton"/>
                                 <connections>
                                     <action selector="onLogoutAction:" destination="V9p-2l-oER" eventType="touchUpInside" id="1b7-OW-oe6"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lpw-FP-jkb" firstAttribute="top" secondItem="q2z-PV-JCn" secondAttribute="bottom" constant="20" id="7eu-TM-GFo"/>
                             <constraint firstAttribute="leadingMargin" secondItem="NsG-rL-eAT" secondAttribute="leading" id="KAl-zg-nGf"/>
@@ -186,6 +186,7 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="1j1-pM-6R3" id="bUp-Ak-ukz"/>
+                        <outlet property="logoutButton" destination="q2z-PV-JCn" id="Qfd-ug-xRl"/>
                         <outlet property="name" destination="NsG-rL-eAT" id="ax8-FD-wZn"/>
                     </connections>
                 </viewController>
@@ -216,5 +217,6 @@
         <image name="accountIcon" width="32" height="32"/>
         <image name="defaultBookIcon" width="32" height="32"/>
         <image name="downloadButton" width="50" height="50"/>
+        <image name="logoutButton" width="345" height="50"/>
     </resources>
 </document>

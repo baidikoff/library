@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
 	open class var navigationBarColor: UIColor {
 		get {
-			return UIColor(red: 255 / 255, green: 221 / 255, blue: 171 / 255, alpha: 1.0)
+			return UIColor(red: 250 / 255, green: 215 / 255, blue: 154 / 255, alpha: 1.0)
 		}
 	}
 }

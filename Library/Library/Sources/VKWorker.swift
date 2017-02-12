@@ -10,10 +10,8 @@ import Foundation
 import VK_ios_sdk
 import SwiftyUserDefaults
 
-private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier?.appending(String(describing: VKWorker.self)))!)
 
 class VKWorker: NSObject {
-	
 	open var authorizationState: VKAuthorizationState? {
 		get {
 			return state
@@ -37,6 +35,7 @@ class VKWorker: NSObject {
 	
 	private let appID = "5245876"
 	private let scope = [VK_PER_DOCS, VK_PER_OFFLINE]
+	private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier?.appending(String(describing: VKWorker.self)))!)
 	
 	init(delegate: VKWorkerDelegate) {
 		self.delegates = [delegate]
@@ -69,9 +68,7 @@ class VKWorker: NSObject {
 						Defaults[.photo] = UIImage(url: url)
 					}
 				}
-			}) { error in
-				print(error?.localizedDescription ?? "")
-			}
+			}, errorBlock: nil)
 		}
 	}
 	
