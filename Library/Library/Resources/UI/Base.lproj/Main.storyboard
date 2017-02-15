@@ -10,20 +10,20 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--VKLibrary-->
+        <!--Library-->
         <scene sceneID="9CI-d6-h5p">
             <objects>
-                <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="VKLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="xvz-gi-Gyz" customClass="BooksTableViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="9EA-iv-XYL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="VKLibrary" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookCell" rowHeight="100" id="CGe-3B-imx" customClass="BookTableViewCell" customModule="Library" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGe-3B-imx" id="zuv-iS-KFJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultBookIcon" translatesAutoresizingMaskIntoConstraints="NO" id="uFg-41-Th4">
@@ -123,7 +123,7 @@
                             <outlet property="delegate" destination="xvz-gi-Gyz" id="7Fn-6W-Uhy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="VKLibrary" id="Jxt-Zk-r5e">
+                    <navigationItem key="navigationItem" title="Library" id="Jxt-Zk-r5e">
                         <barButtonItem key="leftBarButtonItem" image="accountIcon" style="done" id="iEm-F3-UWD">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
@@ -139,7 +139,7 @@
         <!--Account View Controller-->
         <scene sceneID="mqV-Rr-Tp6">
             <objects>
-                <viewController id="V9p-2l-oER" customClass="AccountViewController" customModule="VKLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="V9p-2l-oER" customClass="AccountViewController" customModule="Library" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="brW-Lc-U58"/>
                         <viewControllerLayoutGuide type="bottom" id="lpw-FP-jkb"/>
