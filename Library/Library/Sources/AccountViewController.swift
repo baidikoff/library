@@ -11,9 +11,11 @@ import VK_ios_sdk
 import SwiftyUserDefaults
 
 class AccountViewController: UIViewController {
+	private let notAuthorizedText = "You're not authorized yet"
+	
 	@IBOutlet weak var name: UILabel! {
 		didSet {
-			name.text = Defaults[.user] ?? ""
+			name.text = Defaults[.user] ?? notAuthorizedText
 		}
 	}
 	
@@ -37,5 +39,7 @@ class AccountViewController: UIViewController {
 	
 	@IBAction func onLogoutAction(_ sender: UIButton) {
 		worker?.unauthorize()
+		name.text = notAuthorizedText
+		imageView.image = nil
 	}
 }
