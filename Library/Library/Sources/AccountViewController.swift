@@ -42,4 +42,10 @@ class AccountViewController: UIViewController {
 		name.text = notAuthorizedText
 		imageView.image = nil
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		view.backgroundColor = .navigationBarColor
+	}
 }

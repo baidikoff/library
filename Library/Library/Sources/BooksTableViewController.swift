@@ -10,11 +10,12 @@ import UIKit
 import VK_ios_sdk
 import UXMPDFKit
 import DZNEmptyDataSet
+import ChameleonFramework
 
 let cellIdentifier = "bookCell"
 let toAccountSegueIdentifier = "toAccount"
 
-class BooksTableViewController: UITableViewController {
+class BooksTableViewController: UITableViewController, ErrorHandler {
 	fileprivate var isSearchActive = false
 	fileprivate var booksWorker = BooksWorker()
 	fileprivate var selectedRow = 0
@@ -52,8 +53,8 @@ class BooksTableViewController: UITableViewController {
 	// MARK: VC Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		navigationController?.navigationBar.isTranslucent = true
-		navigationController?.navigationBar.backgroundColor = .navigationBarColor
+		navigationController?.navigationBar.isTranslucent = false
+		navigationController?.hidesNavigationBarHairline = true
 		
 		vkWorker = VKWorker(delegate: self)
 		
@@ -77,8 +78,7 @@ class BooksTableViewController: UITableViewController {
 		do {
 			books = try booksWorker.fetch()
 		} catch let error {
-			let alert = UIAlertController(error: error)
-			present(alert, animated: true, completion: nil)
+			handle(error)
 			books = nil
 		}
 	}
@@ -134,8 +134,7 @@ extension BooksTableViewController {
 				navigationController?.pushViewController(controller, animated: true)
 				searchController.dismiss(animated: true, completion: nil)
 			} catch let error {
-				let alert = UIAlertController(error: error)
-				present(alert, animated: true, completion: nil)
+				handle(error)
 			}
 		}
 	}
@@ -151,8 +150,7 @@ extension BooksTableViewController {
 				
 				tableView.endUpdates()
 			} else {
-				let alert = UIAlertController(error: result!)
-				present(alert, animated: true, completion: nil)
+				handle(result!)
 			}
 		}
 	}
@@ -260,7 +258,6 @@ extension BooksTableViewController: UISearchResultsUpdating {
 // MARK: - BookTableViewCellErrorDelegate
 extension BooksTableViewController: BookTableViewCellErrorDelegate {
 	func bookTableViewCell(cell: BookTableViewCell, didReceiveError error: Error) {
-		let alert = UIAlertController(error: error)
-		present(alert, animated: true, completion: nil)
+		handle(error)
 	}
 }

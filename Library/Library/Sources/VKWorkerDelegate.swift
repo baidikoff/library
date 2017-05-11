@@ -17,7 +17,7 @@ import VK_ios_sdk
 	@objc optional func vkWorkerTokenHasExpired(_ worker: VKWorker) -> Void
 }
 
-@objc protocol VKWorkerUIDelegate {
+@objc protocol VKWorkerUIDelegate: class {
 	@objc optional func vkWorker(_ worker: VKWorker, needsCaptchaEnterWithError error: VKError) -> Void
 	
 	@objc optional func vkWorker(_ worker: VKWorker, willDismissViewController viewController: UIViewController) -> Void

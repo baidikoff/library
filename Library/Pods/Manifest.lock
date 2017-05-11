@@ -1,4 +1,7 @@
 PODS:
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
   - DZNEmptyDataSet (1.8.1)
   - FileKit (4.0.0)
   - MBCircularProgressBar (0.3.5)
@@ -8,6 +11,7 @@ PODS:
   - VK-ios-sdk (1.4.6)
 
 DEPENDENCIES:
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DZNEmptyDataSet
   - FileKit (~> 4.0.0)
   - MBCircularProgressBar
@@ -16,7 +20,17 @@ DEPENDENCIES:
   - UXMPDFKit
   - VK-ios-sdk
 
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
 SPEC CHECKSUMS:
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FileKit: 2589d0393b3bfdc599c2ba6e41419be6db4279e0
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
@@ -25,6 +39,6 @@ SPEC CHECKSUMS:
   UXMPDFKit: 07c7ba1c6c13ef09bfa3119e3f1de364ba6b511b
   VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
 
-PODFILE CHECKSUM: 8d4921d2dedca4ca44ab2b4a4da46bee00342cc2
+PODFILE CHECKSUM: ff11ae8745fec375a62c882c12394d9f5fdbb4ac
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

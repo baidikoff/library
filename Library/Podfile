@@ -4,11 +4,14 @@ use_frameworks!
 target 'Library' do
 
 	pod 'VK-ios-sdk'
-	pod 'DZNEmptyDataSet'
 	pod 'FileKit', '~> 4.0.0'
+	pod 'UXMPDFKit'
+
 	pod 'SwiftyJSON'
 	pod 'SwiftyUserDefaults'
-	pod 'UXMPDFKit'
+	
 	pod 'MBCircularProgressBar'
+	pod 'DZNEmptyDataSet'
+	pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 
 end

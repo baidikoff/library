@@ -8,6 +8,7 @@
 
 import UIKit
 import VK_ios_sdk
+import ChameleonFramework
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,12 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-		UINavigationBar.appearance().backgroundColor = .navigationBarColor
-		UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : UIFont.navigationBarFont]
-		UINavigationBar.appearance().tintColor = .black
-		
-		UISearchBar.appearance().tintColor = .black
-		
+		Chameleon.setGlobalThemeUsingPrimaryColor(.navigationBarColor, withSecondaryColor: .clear, usingFontName: "Georgia", andContentStyle: .contrast)
 		return true
 	}
 	
@@ -29,4 +25,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 }
-

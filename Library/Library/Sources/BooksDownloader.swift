@@ -29,7 +29,6 @@ class BooksDownloader: NSObject {
 	private let configuration: URLSessionConfiguration = {
 		let configuration = URLSessionConfiguration.ephemeral
 		configuration.allowsCellularAccess = true
-		
 		return configuration
 	}()
 	
