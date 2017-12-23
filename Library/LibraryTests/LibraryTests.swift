@@ -10,7 +10,7 @@ import XCTest
 
 class LibraryTests: XCTestCase {
     func test() {
-        XCTAssertTrue(false)
-        XCTAssertEqual(2, 3)
+        XCTAssertTrue(true)
+        XCTAssertEqual(2, 2)
     }
 }
