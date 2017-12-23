@@ -17,6 +17,9 @@ open class PDFViewController: UIViewController {
     /// A boolean value that determines if the scrubber bar should be visible
     open var showsScrubber: Bool = true {
         didSet {
+            guard isViewLoaded else {
+                return
+            }
             pageScrubber.isHidden = !showsScrubber
         }
     }
@@ -51,8 +54,8 @@ open class PDFViewController: UIViewController {
     
     /// A reference to the page scrubber bar
     var pageScrubber: PDFPageScrubber!
-    lazy var formController: PDFFormViewController = PDFFormViewController(document: self.document)
-    lazy var annotationController: PDFAnnotationController = PDFAnnotationController(document: self.document, delegate: self)
+    private(set) open lazy var formController: PDFFormViewController = PDFFormViewController(document: self.document)
+    private(set) open lazy var annotationController: PDFAnnotationController = PDFAnnotationController(document: self.document, delegate: self)
     
     fileprivate var showingAnnotations = false
     fileprivate var showingFormFilling = true
@@ -62,13 +65,27 @@ open class PDFViewController: UIViewController {
      Initializes a new reader with a given document
      
      - Parameters:
-        - document: The document to display
+     - document: The document to display
      
      - Returns: An instance of the PDFViewController
      */
     public init(document: PDFDocument) {
         super.init(nibName: nil, bundle: nil)
         self.document = document
+    }
+    
+    /**
+     Initializes a new reader with a given document and annotation controller
+     
+     - Parameters:
+     - document: The document to display
+     - annotationController: The controller to supervise annotations
+     
+     - Returns: An instance of the PDFViewController
+     */
+    public convenience init(document: PDFDocument, annotationController: PDFAnnotationController) {
+        self.init(document: document)
+        self.annotationController = PDFAnnotationController(document: self.document, delegate: self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -117,20 +134,31 @@ open class PDFViewController: UIViewController {
         pageScrubber.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         pageScrubber.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
         
-        automaticallyAdjustsScrollViewInsets = false
-        
         pageScrubber.sizeToFit()
         
         reloadBarButtons()
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        collectionView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, bottomLayoutGuide.length, 0)
         collectionView.collectionViewLayout.invalidateLayout()
         
         view.layoutSubviews()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.annotationController.finishAnnotation()
+        self.document.annotations = self.annotationController.annotations
+        self.document.save()
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -140,8 +168,8 @@ open class PDFViewController: UIViewController {
             self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, self.bottomLayoutGuide.length, 0)
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.pageScrubber.sizeToFit()
-            }, completion: { (context) in
-                self.collectionView.displayPage(self.document.currentPage, animated: false)
+        }, completion: { (context) in
+            self.collectionView.displayPage(self.document.currentPage, animated: false)
         })
     }
     
@@ -165,12 +193,14 @@ open class PDFViewController: UIViewController {
         }
     }
     
-    fileprivate func rightBarButtons() -> [UIBarButtonItem] {
+    open func rightBarButtons() -> [UIBarButtonItem] {
         var buttons: [UIBarButtonItem] = []
         
         if allowsSharing {
-            let shareFormBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .action,
+
+            let shareFormBarButtonItem = PDFBarButton(
+                image: UIImage.bundledImage("share"),
+                toggled: false,
                 target: self,
                 action: #selector(PDFViewController.shareDocument)
             )
@@ -178,9 +208,9 @@ open class PDFViewController: UIViewController {
             self.shareBarButtonItem = shareFormBarButtonItem
         }
         
-        buttons.append(UIBarButtonItem(
+        buttons.append(PDFBarButton(
             image: UIImage.bundledImage("thumbs"),
-            style: .plain,
+            toggled: false,
             target: self,
             action: #selector(PDFViewController.showThumbnailView)
             )
@@ -189,10 +219,10 @@ open class PDFViewController: UIViewController {
         
         if allowsAnnotations {
             if showingAnnotations {
-                buttons.append(annotationController.highlighterButton)
-                buttons.append(annotationController.penButton)
-                buttons.append(annotationController.textButton)
                 buttons.append(annotationController.undoButton)
+                for button in annotationController.buttons.reversed() {
+                    buttons.append(button)
+                }
             }
             
             buttons.append(PDFBarButton(
@@ -246,7 +276,8 @@ open class PDFViewController: UIViewController {
         case .horizontal:
             if showsScrubber {
                 pageScrubber.isHidden = state
-            } else {
+            }
+            else {
                 pageScrubber.isHidden = true
             }
         case .vertical:
@@ -256,8 +287,8 @@ open class PDFViewController: UIViewController {
     
     /// Toggles the display of the navigation bar and scrubber bar
     func toggleBars() {
-        hideBars(state: !(navigationController?.isNavigationBarHidden ?? false))
         collectionView.collectionViewLayout.invalidateLayout()
+        hideBars(state: !(navigationController?.isNavigationBarHidden ?? false))
     }
     
     //MARK: - IBActions
@@ -298,15 +329,15 @@ extension PDFViewController: PDFSinglePageViewerDelegate {
     }
     
     public func singlePageViewer(_ collectionView: PDFSinglePageViewer, loadedContent content: PDFPageContentView) {
-        if allowsFormFilling {
-            formController.showForm(content)
-        }
+//        if allowsFormFilling {
+//            formController.showForm(content)
+//        }
         if allowsAnnotations {
             annotationController.showAnnotations(content)
         }
     }
     
-    public func singlePageViewer(_ collectionView: PDFSinglePageViewer, selectedAction action: PDFAction) {
+    public func singlePageViewer(_ collectionView: PDFSinglePageViewer, selected action: PDFAction) {
         if let action = action as? PDFActionURL {
             let svc = SFSafariViewController(url: action.url as URL)
             present(svc, animated: true, completion: nil)
@@ -315,10 +346,17 @@ extension PDFViewController: PDFSinglePageViewerDelegate {
         }
     }
     
+    public func singlePageViewer(_ collectionView: PDFSinglePageViewer, selected annotation: PDFAnnotationView) {
+        if let annotation = annotation.parent {
+            annotationController.select(annotation: annotation)
+        }
+    }
+    
     public func singlePageViewer(_ collectionView: PDFSinglePageViewer, tapped recognizer: UITapGestureRecognizer) {
         if hidesBarsOnTap {
             handleTap(recognizer)
         }
+        annotationController.select(annotation: nil)
     }
     
     public func singlePageViewerDidBeginDragging() {

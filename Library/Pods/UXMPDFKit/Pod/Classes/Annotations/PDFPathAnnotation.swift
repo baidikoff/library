@@ -8,22 +8,30 @@
 
 import UIKit
 
-class PDFPathAnnotation {
-    var page: Int?
+open class PDFPathAnnotation: NSObject, NSCoding {
+    
+    public var page: Int?
+    public var uuid: String = UUID().uuidString
+    public var saved: Bool = false
+    public var delegate: PDFAnnotationEvent?
     
     var path: UIBezierPath = UIBezierPath()
-    var color: UIColor = UIColor.black {
+    
+    /// The color for the stroke to be
+    public var color: UIColor = UIColor.black {
         didSet {
             color.setStroke()
             path.stroke()
         }
     }
-    var fill: Bool = false
-    var lineWidth: CGFloat = 3.0 {
+    
+    /// The linewidth of the stroke
+    public var lineWidth: CGFloat = 3.0 {
         didSet {
             path.lineWidth = lineWidth
         }
     }
+    var fill: Bool = false
     var rect: CGRect = CGRect(x: 0, y: 0, width: 1000, height: 1000) {
         didSet {
             view.frame = rect
@@ -35,43 +43,81 @@ class PDFPathAnnotation {
     fileprivate var points: [CGPoint] = [CGPoint.zero, CGPoint.zero, CGPoint.zero, CGPoint.zero, CGPoint.zero]
     fileprivate var ctr: Int = 0
     
-    func drawRect(_ frame: CGRect) {
-        self.incrementalImage?.draw(in: rect)
+    override required public init() { super.init() }
+    
+    required public init(coder aDecoder: NSCoder) {
+        page = aDecoder.decodeObject(forKey: "page") as? Int
+        path = aDecoder.decodeObject(forKey: "path") as! UIBezierPath
+        color = aDecoder.decodeObject(forKey: "color") as! UIColor
+        fill = aDecoder.decodeBool(forKey: "fill")
+        lineWidth = aDecoder.decodeObject(forKey: "lineWidth") as! CGFloat
+        rect = aDecoder.decodeCGRect(forKey: "rect")
+        points = aDecoder.decodeObject(forKey: "points") as! [CGPoint]
+        incrementalImage = aDecoder.decodeObject(forKey: "image") as? UIImage
+        ctr = aDecoder.decodeInteger(forKey: "ctr")
+        
+        super.init()
+    }
+    
+    public func didEnd() {
+        self.view.hideEditingHandles()
+    }
+    
+    func drawRect(_ frame: CGRect, point: CGPoint = CGPoint.zero) {
+        self.incrementalImage?.draw(at: point)
         self.color.setStroke()
         self.path.stroke()
     }
+    
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(page, forKey: "page")
+        aCoder.encode(path, forKey: "path")
+        aCoder.encode(color, forKey: "color")
+        aCoder.encode(fill, forKey: "fill")
+        aCoder.encode(lineWidth, forKey: "lineWidth")
+        aCoder.encode(rect, forKey: "rect")
+        aCoder.encode(points, forKey: "points")
+        aCoder.encode(ctr, forKey: "ctr")
+        aCoder.encode(incrementalImage, forKey: "image")
+    }
 }
 
-class PDFPathView: UIView {
-    var parent: PDFPathAnnotation?
+class PDFPathView: ResizableView, PDFAnnotationView {
+    var parent: PDFAnnotation?
+    override var canBecomeFirstResponder: Bool { return true }
     
     convenience init(parent: PDFPathAnnotation, frame: CGRect) {
+        
         self.init()
         
         self.frame = frame
         self.parent = parent
+        self.delegate = parent
         
         backgroundColor = UIColor.clear
         isOpaque = false
+        clipsToBounds = false
     }
     
     override func draw(_ rect: CGRect) {
-        parent?.drawRect(rect)
+        (parent as? PDFPathAnnotation)?.drawRect(rect)
     }
 }
 
 extension PDFPathAnnotation: PDFAnnotation {
-    func mutableView() -> UIView {
+    
+    public func mutableView() -> UIView {
         view = PDFPathView(parent: self, frame: rect)
         return view
     }
     
-    func touchStarted(_ touch: UITouch, point: CGPoint) {
+    public func touchStarted(_ touch: UITouch, point: CGPoint) {
         ctr = 0
         points[0] = point
+        path.move(to: points[0])
     }
     
-    func touchMoved(_ touch: UITouch, point: CGPoint) {
+    public func touchMoved(_ touch: UITouch, point: CGPoint) {
         ctr += 1
         points[ctr] = point
         if ctr == 4 {
@@ -92,17 +138,33 @@ extension PDFPathAnnotation: PDFAnnotation {
         }
     }
     
-    func touchEnded(_ touch: UITouch, point: CGPoint) {
-        drawBitmap()
+    public func touchEnded(_ touch: UITouch, point: CGPoint) {
+        
         view.setNeedsDisplay()
-        path.removeAllPoints()
         ctr = 0
     }
     
+    public func save() {
+        
+        let rect = path.bounds
+        let inset: CGFloat = 5.0
+        let translation = CGAffineTransform(translationX: -path.bounds.minX + inset,
+                                            y: -path.bounds.minY + inset)
+        path.apply(translation)
+        
+        self.rect = rect.insetBy(dx: -1 * inset, dy: -1 * inset)
+        
+        drawBitmap()
+        view.setNeedsDisplay()
+        ctr = 0
+        
+        self.saved = true
+    }
+    
     func drawBitmap() {
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         if incrementalImage == nil {
-            let path = UIBezierPath(rect: view.bounds)
+            let path = UIBezierPath(rect: rect)
             UIColor.clear.setFill()
             path.fill()
         }
@@ -114,17 +176,43 @@ extension PDFPathAnnotation: PDFAnnotation {
         UIGraphicsEndImageContext()
     }
     
-    func drawInContext(_ context: CGContext) {
+    public func drawInContext(_ context: CGContext) {
         drawBitmap()
-        drawRect(rect)
+        drawRect(rect, point: rect.origin)
     }
 }
 
-class PDFHighlighterAnnotation: PDFPathAnnotation {
-    override init() {
+extension PDFPathAnnotation: ResizableViewDelegate {
+    func resizableViewDidBeginEditing(view: ResizableView) { }
+    
+    func resizableViewDidEndEditing(view: ResizableView) {
+        self.rect = self.view.frame
+    }
+    
+    func resizableViewDidSelectAction(view: ResizableView, action: String) {
+        self.delegate?.annotation(annotation: self, selected: action)
+    }
+}
+
+open class PDFPenAnnotation: PDFPathAnnotation, PDFAnnotationButtonable {
+    
+    public static var name: String? { return "Pen" }
+    public static var buttonImage: UIImage? { return UIImage.bundledImage("pen") }
+}
+
+open class PDFHighlighterAnnotation: PDFPathAnnotation, PDFAnnotationButtonable {
+    
+    public static var name: String? { return "Highlighter" }
+    public static var buttonImage: UIImage? { return UIImage.bundledImage("highlighter") }
+    
+    required public init() {
         super.init()
         
         color = UIColor.yellow.withAlphaComponent(0.3)
         lineWidth = 10.0
+    }
+    
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

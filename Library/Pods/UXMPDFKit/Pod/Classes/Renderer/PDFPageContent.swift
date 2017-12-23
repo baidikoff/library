@@ -8,7 +8,8 @@
 
 import UIKit
 
-internal class PDFPageContent: UIView {
+public class PDFPageContent: UIView {
+    
     private let pdfDocRef: CGPDFDocument
     private let pdfPageRef: CGPDFPage?
     private let pageAngle: Int /// 0, 90, 180, 270
@@ -22,7 +23,7 @@ internal class PDFPageContent: UIView {
     var cropBoxRect: CGRect
     var viewRect: CGRect = CGRect.zero
     
-    override class var layerClass : AnyClass {
+    override public class var layerClass : AnyClass {
         return PDFPageTileLayer.self
     }
     
@@ -94,11 +95,11 @@ internal class PDFPageContent: UIView {
         self.init(pdfDocument: document, page: page, password: document.password)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func removeFromSuperview() {
+    override public func removeFromSuperview() {
         layer.delegate = nil
         super.removeFromSuperview()
     }
@@ -212,20 +213,24 @@ internal class PDFPageContent: UIView {
     }
     
     //MARK: - Gesture Recognizer
-    func processSingleTap(_ recognizer: UIGestureRecognizer) -> PDFAction? {
+    func processSingleTap(_ recognizer: UIGestureRecognizer) -> AnyObject? {
         guard recognizer.state == .recognized else { return nil }
-        guard links.count > 0 else { return nil }
         
         let point = recognizer.location(in: self)
         
         for link in links where link.rect.contains(point) {
             return PDFAction.fromPDFDictionary(link.dictionary, documentReference: pdfDocRef)
         }
+
+        for annotation in subviews where annotation.frame.contains(point) {
+            return annotation
+        }
+        
         return nil
     }
     
     //MARK: - CATiledLayer Delegate Methods
-    override func draw(_ layer: CALayer, in ctx: CGContext) {
+    override open func draw(_ layer: CALayer, in ctx: CGContext) {
         guard let pdfPageRef = pdfPageRef else { return }
         ctx.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         ctx.fill(ctx.boundingBoxOfClipPath)

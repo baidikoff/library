@@ -10,22 +10,7 @@ import UIKit
 
 open class PDFDocument: NSObject, NSCoding {
     
-    lazy open var documentRef: CGPDFDocument? = {
-        do {
-            if let fileUrl = self.fileUrl {
-                return try CGPDFDocument.create(fileUrl, password: self.password)
-            }
-            else if let fileData = self.fileData,
-                let dataProvider = CGDataProvider(data: fileData) {
-                return CGPDFDocument(dataProvider)
-            }
-            else {
-                return nil
-            }
-        } catch {
-            return nil
-        }
-    }()
+    open var documentRef: CGPDFDocument?
     
     /// Document Properties
     open var password: String?
@@ -47,37 +32,50 @@ open class PDFDocument: NSObject, NSCoding {
     open var producer: String?
     open var modificationDate: Date?
     open var creationDate: Date?
-    open var version:Float = 0.0
+    open var version: Float = 0.0
     
-    static func documentFromFile(_ filePath: String, password: String?) throws -> PDFDocument? {
-        if let document = PDFDocument.unarchiveDocumentForFile(filePath, password: password) {
+    /// Document annotations
+    open var annotations: PDFAnnotationStore = PDFAnnotationStore()
+    
+    public static func from(filePath: String, password: String? = nil) throws -> PDFDocument? {
+        if let document = try PDFDocument.unarchiveDocument(filePath: filePath, password: password) {
             return document
-        } else {
+        }
+        else {
             return try PDFDocument(filePath: filePath, password: password)
         }
     }
     
-    static func unarchiveDocumentForFile(_ filePath: String, password: String?) -> PDFDocument? {
+    static func unarchiveDocument(filePath: String, password: String?) throws -> PDFDocument? {
+        
+        let archiveFilePath = PDFDocument.archiveFilePathForFile(path: filePath)
+        if let document = NSKeyedUnarchiver.unarchiveObject(withFile: archiveFilePath) as? PDFDocument {
+            document.fileUrl = URL(fileURLWithPath: filePath, isDirectory: false)
+            document.password = password
+            
+            try document.loadDocument()
+            return document
+        }
         return nil
     }
     
     public required init?(coder aDecoder: NSCoder) {
         self.guid = aDecoder.decodeObject(forKey: "fileGUID") as! String
-        self.currentPage = aDecoder.decodeObject(forKey: "currentPage") as! Int
+        self.currentPage = aDecoder.decodeInteger(forKey: "currentPage")
         self.bookmarks = aDecoder.decodeObject(forKey: "bookmarks") as! NSMutableIndexSet
         self.lastOpen = aDecoder.decodeObject(forKey: "lastOpen") as? Date
-        self.fileUrl = URL(fileURLWithPath: aDecoder.decodeObject(forKey: "fileURL") as! String)
+        if let annotations = aDecoder.decodeObject(forKey: "annotations") as? PDFAnnotationStore {
+            self.annotations = annotations
+        }
+        else {
+            self.annotations = PDFAnnotationStore()
+        }
         
         super.init()
+    }
+    
+    public init(filePath: String, password: String? = nil) throws {
         
-        try! self.loadDocumentInformation()
-    }
-    
-    public convenience init(filePath: String) throws {
-        try self.init(filePath: filePath, password: nil)
-    }
-    
-    public init(filePath: String, password: String?) throws {
         self.guid = PDFDocument.GUID()
         self.password = password
         self.fileUrl = URL(fileURLWithPath: filePath, isDirectory: false)
@@ -85,12 +83,12 @@ open class PDFDocument: NSObject, NSCoding {
         
         super.init()
         
-        try self.loadDocumentInformation()
+        try self.loadDocument()
         
         self.save()
     }
     
-    public init(fileData: NSData, password: String?) throws {
+    public init(fileData: NSData, password: String? = nil) throws {
         self.guid = PDFDocument.GUID()
         self.password = password
         self.fileData = fileData
@@ -98,21 +96,28 @@ open class PDFDocument: NSObject, NSCoding {
         
         super.init()
         
-        try self.loadDocumentInformation()
+        try self.loadDocument()
         
         self.save()
     }
     
-    func page(at page: Int) -> CGPDFPage? {
+    func loadDocument() throws {
         
-        if let documentRef = self.documentRef,
-            let pageRef = documentRef.page(at: page) {
-            return pageRef
+        if let fileUrl = self.fileUrl {
+            self.documentRef =  try CGPDFDocument.create(url: fileUrl, password: self.password)
         }
-        return nil
+        else if let fileData = self.fileData {
+            self.documentRef =  try CGPDFDocument.create(data: fileData, password: self.password)
+        }
+        
+        if documentRef == nil {
+            throw CGPDFDocumentError.unableToOpen
+        }
+        
+        self.loadDocumentInformation()
     }
     
-    func loadDocumentInformation() throws {
+    func loadDocumentInformation() {
         guard let pdfDocRef = documentRef else {
             return
         }
@@ -184,6 +189,15 @@ open class PDFDocument: NSObject, NSCoding {
         self.pageCount = pdfDocRef.numberOfPages
     }
     
+    func page(at page: Int) -> CGPDFPage? {
+        
+        if let documentRef = self.documentRef,
+            let pageRef = documentRef.page(at: page) {
+            return pageRef
+        }
+        return nil
+    }
+    
     
     //MARK: - Helper methods
     
@@ -206,25 +220,28 @@ open class PDFDocument: NSObject, NSCoding {
         return pathURL.path
     }
     
-    static func archiveFilePathForFileAtPath(_ path: String) -> String {
+    static func archiveFilePathForFile(path: String) -> String {
         let archivePath = PDFDocument.applicationSupportPath()
-        let archiveName = "random-name-fix-later.plist"
+        
+        let archiveName = (path as NSString).lastPathComponent + ".plist"
         return (archivePath as NSString).appendingPathComponent(archiveName)
     }
     
     func archiveWithFileAtPath(_ filePath: String) -> Bool {
-        let archiveFilePath = PDFDocument.archiveFilePathForFileAtPath(filePath)
+        let archiveFilePath = PDFDocument.archiveFilePathForFile(path: filePath)
         return NSKeyedArchiver.archiveRootObject(self, toFile: archiveFilePath)
     }
     
     open func save() {
+        
+        //TODO: Better solution to support NSData
         if let filePath = fileUrl?.path {
             let _ = self.archiveWithFileAtPath(filePath)
         }
     }
     
     open func reloadProperties() {
-        try! self.loadDocumentInformation()
+        self.loadDocumentInformation()
     }
     
     open func boundsForPDFPage(_ page: Int) -> CGRect {
@@ -257,6 +274,6 @@ open class PDFDocument: NSObject, NSCoding {
         aCoder.encode(self.currentPage, forKey: "currentPage")
         aCoder.encode(self.bookmarks, forKey: "bookmarks")
         aCoder.encode(self.lastOpen, forKey: "lastOpen")
-        aCoder.encode(self.fileUrl?.path, forKey: "fileURL")
+        aCoder.encode(self.annotations, forKey: "annotations")
     }
 }

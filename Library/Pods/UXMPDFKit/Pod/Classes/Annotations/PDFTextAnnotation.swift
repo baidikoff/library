@@ -8,87 +8,85 @@
 
 import UIKit
 
-class PDFTextAnnotation: NSObject {
-    var page: Int?
+open class PDFTextAnnotation: NSObject, NSCoding {
     
-    var text = "" {
+    public var page: Int?
+    public var uuid: String = UUID().uuidString
+    public var saved: Bool = false
+    public var delegate: PDFAnnotationEvent?
+    
+    var text: String = "" {
         didSet {
-            textView.text = text
+            view.text = text
         }
     }
     
-    var rect = CGRect.zero {
+    var rect: CGRect = CGRect.zero {
         didSet {
-            textView.frame = self.rect
+            view.frame = self.rect
         }
     }
     
-    var font = UIFont.systemFont(ofSize: 14.0) {
+    var font: UIFont = UIFont.systemFont(ofSize: 14.0) {
         didSet {
-            textView.font = self.font
+            view.font = self.font
         }
     }
     
-    lazy var textView: UITextView = self.createTextView()
+    lazy var view: PDFTextAnnotationView = PDFTextAnnotationView(parent: self)
     
-    fileprivate var startTouch: CGPoint = CGPoint.zero
-    fileprivate var startInternalPosition: CGPoint = CGPoint.zero
-    fileprivate var isDragging: Bool = false
+    fileprivate var isEditing: Bool = false
     
-    func createTextView() -> UITextView {
-        let textView = UITextView(frame: rect)
-        textView.delegate = self
-        textView.font = font
-        textView.text = text
-        
-        textView.layer.borderWidth = 2.0
-        textView.layer.borderColor = UIColor(red: 0.7, green: 0.85, blue: 1.0, alpha: 0.9).cgColor
-        textView.backgroundColor = UIColor(red: 0.7, green: 0.85, blue: 1.0, alpha: 0.2)
-        
-        return textView
+    override required public init() { super.init() }
+    
+    public func didEnd() {
+        self.view.hideEditingHandles()
+        self.view.textView.resignFirstResponder()
+        self.view.textView.isUserInteractionEnabled = false
+    }
+    
+    required public init(coder aDecoder: NSCoder) {
+        page = aDecoder.decodeObject(forKey: "page") as? Int
+        text = aDecoder.decodeObject(forKey: "text") as! String
+        rect = aDecoder.decodeCGRect(forKey: "rect")
+        font = aDecoder.decodeObject(forKey: "font") as! UIFont
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(page, forKey: "page")
+        aCoder.encode(text, forKey: "text")
+        aCoder.encode(rect, forKey: "rect")
+        aCoder.encode(font, forKey: "font")
     }
 }
 
 extension PDFTextAnnotation: PDFAnnotation {
-    func mutableView() -> UIView {
-        textView = createTextView()
-        return textView
+    
+    public func mutableView() -> UIView {
+        view = PDFTextAnnotationView(parent: self)
+        return view
     }
     
-    func touchStarted(_ touch: UITouch, point: CGPoint) {
-        startTouch = point
-        startInternalPosition = touch.location(in: textView)
-        
-        if textView.frame.contains(point) {
-            isDragging = true
-        } else {
-            textView.resignFirstResponder()
-        }
-        
+    public func touchStarted(_ touch: UITouch, point: CGPoint) {
         if rect == CGRect.zero {
-            rect = CGRect(origin: point, size: CGSize(width: 300, height: 32))
+            rect = CGRect(origin: point, size: CGSize(width: 150, height: 48))
         }
+        self.view.touchesBegan([touch], with: nil)
     }
     
-    func touchMoved(_ touch: UITouch, point: CGPoint) {
-        if isDragging {
-            rect = CGRect(
-                x: point.x - startInternalPosition.x,
-                y: point.y - startInternalPosition.y,
-                width: rect.width,
-                height: rect.height
-            )
-        }
+    public func touchMoved(_ touch: UITouch, point: CGPoint) {
+        self.view.touchesMoved([touch], with: nil)
     }
     
-    func touchEnded(_ touch: UITouch, point: CGPoint) {
-        if startTouch == point {
-            textView.becomeFirstResponder()
-        }
-        isDragging = false
+    public func touchEnded(_ touch: UITouch, point: CGPoint) {
+        self.view.touchesEnded([touch], with: nil)
     }
     
-    func drawInContext(_ context: CGContext) {
+    public func save() {
+        self.saved = true
+    }
+    
+    public func drawInContext(_ context: CGContext) {
         UIGraphicsPushContext(context)
         context.setAlpha(1.0)
         
@@ -111,22 +109,119 @@ extension PDFTextAnnotation: PDFAnnotation {
     }
 }
 
+extension PDFTextAnnotation: ResizableViewDelegate {
+    func resizableViewDidBeginEditing(view: ResizableView) {}
+    
+    func resizableViewDidEndEditing(view: ResizableView) {
+        self.rect = self.view.frame
+    }
+    
+    func resizableViewDidSelectAction(view: ResizableView, action: String) {
+        self.delegate?.annotation(annotation: self, selected: action)
+    }
+}
+
+extension PDFTextAnnotation: PDFAnnotationButtonable {
+    
+    public static var name: String? { return "Text" }
+    public static var buttonImage: UIImage? { return UIImage.bundledImage("text-symbol") }
+}
+
 extension PDFTextAnnotation: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
+    public func textViewDidChange(_ textView: UITextView) {
         textView.sizeToFit()
         
-        var width: CGFloat = 300.0
-        if self.textView.frame.width > width {
-            width = self.textView.frame.width
+        var width: CGFloat = 150.0
+        if self.view.frame.width > width {
+            width = self.view.frame.width
         }
         
-        rect = CGRect(x: textView.frame.origin.x,
-                           y: textView.frame.origin.y,
-                           width: width,
-                           height: textView.frame.height)
+        rect = CGRect(x: self.view.frame.origin.x,
+                      y: self.view.frame.origin.y,
+                      width: width,
+                      height: self.view.frame.height)
         
         if text != textView.text {
             text = textView.text
         }
+    }
+    
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        textView.isUserInteractionEnabled = false
+    }
+}
+
+
+class PDFTextAnnotationView: ResizableView, PDFAnnotationView {
+    
+    var parent: PDFAnnotation?
+    override var canBecomeFirstResponder: Bool { return true }
+    override var menuItems: [UIMenuItem] {
+        return [
+            UIMenuItem(
+                title: "Delete",
+                action: #selector(PDFTextAnnotationView.menuActionDelete(_:))
+            ),
+            UIMenuItem(
+                title: "Edit",
+                action: #selector(PDFTextAnnotationView.menuActionEdit(_:))
+            )
+        ]
+    }
+    
+    var textView: UITextView = UITextView()
+    
+    var text: String = "" {
+        didSet {
+            textView.text = text
+        }
+    }
+    
+    var font: UIFont = UIFont.systemFont(ofSize: 14.0) {
+        didSet {
+            textView.font = self.font
+        }
+    }
+    
+    override var frame: CGRect {
+        didSet {
+            textView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        }
+    }
+    
+    convenience init(parent: PDFTextAnnotation) {
+        
+        self.init()
+        
+        self.parent = parent
+        self.delegate = parent
+        self.frame = parent.rect
+        self.text = parent.text
+        self.font = parent.font
+        
+        self.textView.text = parent.text
+        self.textView.delegate = parent
+        self.textView.isUserInteractionEnabled = false
+        self.textView.backgroundColor = UIColor.clear
+        
+        self.backgroundColor = UIColor.clear
+        
+        self.addSubview(textView)
+    }
+    
+    func menuActionEdit(_ sender: Any!) {
+        self.delegate?.resizableViewDidSelectAction(view: self, action: "edit")
+        
+        self.isLocked = true
+        self.textView.isUserInteractionEnabled = true
+        self.textView.becomeFirstResponder()
+    }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        
+        if action == #selector(menuActionEdit(_:)) {
+            return true
+        }
+        return super.canPerformAction(action, withSender: sender)
     }
 }
