@@ -11,5 +11,6 @@ import XCTest
 class LibraryTests: XCTestCase {
     func test() {
         XCTAssertTrue(false)
+        XCTAssertEqual(2, 3)
     }
 }
